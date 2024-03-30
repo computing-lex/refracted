@@ -13,4 +13,27 @@ MonoBehaviour:
   m_Name: Shape
   m_EditorClassIdentifier: 
   planetRadius: 1
-  noiseLayers: []
+  noiseLayers:
+  - enabled: 1
+    useFirstLayerAsMask: 0
+    noiseSettings:
+      filterType: 0
+      simpleNoiseSettings:
+        strength: 2.13
+        numLayers: 1
+        baseRoughness: 0.9
+        roughness: 0.73
+        persistence: 0
+        centre: {x: 0, y: 0, z: 0}
+        minValue: 0
+        noiseTexture: {fileID: 2800000, guid: f0fbfc7dfcb20b14fbe5ba53a8556ed5, type: 3}
+      ridgidNoiseSettings:
+        strength: 0
+        numLayers: 0
+        baseRoughness: 0
+        roughness: 0
+        persistence: 0
+        centre: {x: 0, y: 0, z: 0}
+        minValue: 0
+        noiseTexture: {fileID: 0}
+        weightMultiplier: 0

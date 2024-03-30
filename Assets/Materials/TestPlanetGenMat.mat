@@ -99,7 +99,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SkyCutoff: 0.2
-    - _SkyCutoffBlend: 0.16
+    - _SkyCutoffBlend: 0
     - _SkyDistortSpeed: 0.1
     - _SkyDistortStrength: 0.06
     - _SkyRotationSpeed: 0.1
@@ -109,8 +109,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 0.08627451}
-    - _SkyColor: {r: 0.5588629, g: 0.55648506, b: 0.7106918, a: 1}
+    - _SkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
