@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71fe7f0191ee5fc478ad8a96d6c356a2, type: 3}
-  m_Name: ColorSettings
+  m_Script: {fileID: 11500000, guid: 298e82e98dd871342b2f985edbad3626, type: 3}
+  m_Name: Shape
   m_EditorClassIdentifier: 
-  planetColour: {r: 0, g: 0, b: 0, a: 0}
+  planetRadius: 1
+  noiseLayers: []
