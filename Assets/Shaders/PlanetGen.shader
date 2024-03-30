@@ -2,24 +2,30 @@ Shader "Custom/PlanetGen"
 {
     Properties
     {
-        _Color("", Color) = (1, 1, 1, 1)
-        _MainTex("", 2D) = "white" {}
+        _Color("Albedo", Color) = (1, 1, 1, 1)
+        _MainTex("Main Texture", 2D) = "white" {}
 
-        _Glossiness("", Range(0, 1)) = 0.5
-        [Gamma] _Metallic("", Range(0, 1)) = 0
+        _Glossiness("Glossiness", Range(0, 1)) = 0.5
+        [Gamma] _Metallic("Metallic", Range(0, 1)) = 0
 
-        _BumpScale("", Float) = 1
-        _BumpMap("", 2D) = "bump" {}
+        _BumpScale("Normal Map Scale", Float) = 1
+        _BumpMap("Normal Map", 2D) = "bump" {}
 
-        _OcclusionStrength("", Range(0, 1)) = 1
-        _OcclusionMap("", 2D) = "white" {}
-
-        _MapScale("", Float) = 1
+        _MapScale("Texture Scale", Float) = 1
 
         _FresnelColor("Fresnel Color", Color) = (1,1,1,1)
 		_FresnelBias("Fresnel Bias", Float) = 0
 		_FresnelScale("Fresnel Scale", Float) = 1
 		_FresnelPower("Fresnel Power", Float) = 1
+
+        _SkyNoise("Sky Noise", 2D) = "white" {}
+        _SkyNoiseDistort("Sky Distortion Texture", 2D) = "black" {}
+        _SkyCutoff("Sky Cuttoff", Range(0, 1)) = 0.3
+        _SkyCutoffBlend("Sky Cuttoff Blend", Range(0, 1)) = 0.03
+        _SkyColor("Sky Color", Color) = (1, 1, 1, 1)
+        _SkyDistortStrength("Sky Distortion Strength", Range(0, 1)) = 0.1
+        _SkyDistortSpeed("Sky Distortion Speed", Range(0, 1)) = 0.1
+        _SkyRotationSpeed("Sky Rotation Speed", Float) = 0.3
     }
     SubShader
     {
@@ -32,6 +38,8 @@ Shader "Custom/PlanetGen"
         #pragma shader_feature _NORMALMAP
         #pragma shader_feature _OCCLUSIONMAP
 
+        #pragma target 4.0
+
         half4 _Color;
         sampler2D _MainTex;
 
@@ -41,21 +49,30 @@ Shader "Custom/PlanetGen"
         half _BumpScale;
         sampler2D _BumpMap;
 
-        half _OcclusionStrength;
-        sampler2D _OcclusionMap;
-
         half _MapScale;
 
+        // Fresnel Stuff
         half4 _FresnelColor;
         half _FresnelBias;
         half _FresnelScale;
         half _FresnelPower;
+
+        // Atmosphere Parameters
+        sampler2D _SkyNoise;
+        sampler2D _SkyNoiseDistort;
+        half _SkyDistortStrength;
+        half _SkyDistortSpeed;
+        half _SkyCutoff;
+        half _SkyCutoffBlend;
+        float4 _SkyColor;
+        half _SkyRotationSpeed;
 
         struct Input
         {
             float3 localCoord;
             float3 localNormal;
             float fresnel;
+            float2 texcoordScroll;
         };
 
         void vert(inout appdata_full v, out Input data)
@@ -67,6 +84,8 @@ Shader "Custom/PlanetGen"
             // Calculate Fresnel in Vertex Shader
             float3 i = normalize(ObjSpaceViewDir(v.vertex));
             data.fresnel = _FresnelBias + _FresnelScale * pow(1 + dot(i, v.normal), -_FresnelPower);
+            float2 scroll = v.texcoord.xy + _Time.y * _SkyDistortSpeed;
+            data.texcoordScroll = scroll;
         }
 
         void surf(Input IN, inout SurfaceOutputStandard o)
@@ -86,8 +105,20 @@ Shader "Custom/PlanetGen"
             half4 cz = tex2D(_MainTex, tz) * bf.z;
             half4 color = (cx + cy + cz) * _Color;
 
+            // Atmosphere Color
+            float2 sky_uv = IN.texcoordScroll;
+            half4 sn2 = tex2D(_SkyNoiseDistort, sky_uv);
+            half4 acx = tex2D(_SkyNoise, tx + sn2*_SkyDistortStrength + _Time.y * _SkyRotationSpeed) * bf.x;
+            half4 acy = tex2D(_SkyNoise, ty + sn2*_SkyDistortStrength + _Time.y * _SkyRotationSpeed) * bf.y;
+            half4 acz = tex2D(_SkyNoise, tz + sn2*_SkyDistortStrength + _Time.y * _SkyRotationSpeed) * bf.z;
+            half4 atmcolor = (acx + acy + acz);
+            half atm = smoothstep(_SkyCutoff, _SkyCutoff + _SkyCutoffBlend, atmcolor.r);
+            color = lerp(color, _SkyColor, atm);
+
             // Fresnel Shading
             color = lerp(color, float4(_FresnelColor.rgb, 1), IN.fresnel * _FresnelColor.a);
+
+            // DEBUG
 
             o.Albedo = color.rgb;
             o.Alpha = color.a;
@@ -100,14 +131,6 @@ Shader "Custom/PlanetGen"
             o.Normal = UnpackScaleNormal(nx + ny + nz, _BumpScale);
         #endif
 
-        #ifdef _OCCLUSIONMAP
-            // Occlusion map
-            half ox = tex2D(_OcclusionMap, tx).g * bf.x;
-            half oy = tex2D(_OcclusionMap, ty).g * bf.y;
-            half oz = tex2D(_OcclusionMap, tz).g * bf.z;
-            o.Occlusion = lerp((half4)1, ox + oy + oz, _OcclusionStrength);
-        #endif
-
             // Misc parameters
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
@@ -115,5 +138,4 @@ Shader "Custom/PlanetGen"
         ENDCG
     }
     FallBack "Diffuse"
-    // CustomEditor "StandardTriplanarInspector"
 }
