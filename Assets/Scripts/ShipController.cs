@@ -7,10 +7,21 @@ public class ShipController : MonoBehaviour, IInteractable
 {
 
     [SerializeField] private Transform standingPos;
+
+    private float leftShift = -30;
+    private float rightShift = 30;
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    void Update()
+    {
+        if (GameManager.instance.Player.GetState() == GameManager.PlayerState.Piloting)
+        {
+            //rotate steering wheel mayb
+        }
     }
 
     // Update is called once per frame
@@ -44,4 +55,11 @@ public class ShipController : MonoBehaviour, IInteractable
     {
         return standingPos.position;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("trigger guh");
+    }
+
+   
 }

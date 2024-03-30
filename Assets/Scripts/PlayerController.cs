@@ -97,12 +97,12 @@ public class PlayerController : MonoBehaviour
 
     public void MoveWithShip(Vector3 move,Vector3 rotate)
     {
-       // characterController.Move(new Vector3(move.x, 0, move.z));
-        // cam.transform.localRotation = Quaternion.Euler(rotate.x, 0, 0);
-        //if(playerState == PlayerState.Piloting)
-        //{
-       //     transform.Rotate(rotate);
-        //}
+       characterController.Move(new Vector3(move.x, 0, move.z));
+        //cam.transform.localRotation = Quaternion.Euler(rotate.x, 0, 0);
+        if(playerState == PlayerState.Piloting)
+        {
+            transform.Rotate(rotate);
+       }
 
     }
 
