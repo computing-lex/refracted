@@ -5,19 +5,57 @@ using UnityEngine;
 public class SpaceFieldGeneration : MonoBehaviour
 {
     [Range(0, 100)]
-    public int chanceForPlanet;
-    public GameObject planetoid;
+    [SerializeField] private int chanceForPlanet;
+    [SerializeField] private GameObject planetoid;
     [SerializeField] private GameObject planetParent;
+    [SerializeField] private Vector3 randomShift = new Vector3(0.5f, 0, 0.5f);
+    public bool regenMap = false;
+    [SerializeField] private int planetSpacing = 10;
 
-    public int height;
-    public int width;
-    int[,] map;
+    [SerializeField] private int height;
+    [SerializeField] private int width;
+    [SerializeField] private int[,] map;
+    private List<GameObject> planets;
 
     void Start()
     {
         map = new int[width, height];
-        RandomFillMap();
 
+        GenerateMap();
+
+    }
+
+    void Update()
+    {
+        if (regenMap)
+        {
+            GenerateMap();
+            regenMap = false;
+        }
+    }
+
+    void RandomFillMap()
+    {
+        for (int x = 0; x < width; x += planetSpacing)
+        {
+            for (int y = 0; y < height; y += planetSpacing)
+            {
+                float planetDecision = Random.value * 100;
+                if (planetDecision < chanceForPlanet)
+                {
+                    map[x, y] = 1;
+                }
+                else
+                {
+                    map[x, y] = 0;
+                }
+            }
+        }
+    }
+
+    private void GenerateMap()
+    {
+        RandomFillMap();
 
         if (map != null)
         {
@@ -27,30 +65,22 @@ public class SpaceFieldGeneration : MonoBehaviour
                 {
                     if (map[x, y] == 1)
                     {
-                        Vector3 position = new Vector3(-width / 2 + x + 0.5f, 0, -height / 2 + y + 0.5f);
+                        randomShift *= Random.value;
+                        Vector3 position = new Vector3(-width / 2 + x + randomShift.x, randomShift.y, -height / 2 + y + randomShift.z);
                         GameObject newPlanetoid = Instantiate(planetoid, position, Quaternion.identity);
                         newPlanetoid.transform.SetParent(planetParent.transform, false);
+                        newPlanetoid.name = "Planetoid " + x + ", " + y;
+                        planets.Add(newPlanetoid);
                     }
                 }
             }
         }
     }
 
-    void RandomFillMap()
-    {
-
-        for (int x = 0; x < width; x += 10)
+    private void DestroyPlanets() {
+        for (int i = 0; i < planets.Count; i++)
         {
-            for (int y = 0; y < height; y += 10)
-            {
-                float planetDecision = Random.value * 100;
-                if (planetDecision < chanceForPlanet)
-                {
-                    map[x, y] = 1;
-                } else {
-                    map[x, y] = 0;
-                }
-            }
+            Destroy(planets[i]);
         }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,73 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1112155696
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1112155698}
-  - component: {fileID: 1112155697}
-  - component: {fileID: 1112155699}
-  m_Layer: 0
-  m_Name: Universe controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1112155697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1112155696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d241838a160a3f4dbf9d7e7823fa4d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  planetoid: {fileID: 4738692903968649171, guid: 2b7dc2c798fd0694d89f7cfdd67f50e6, type: 3}
-  numberBodies: 5
-  planetoidRange: 10
-  min_bodySize: 0.5
-  max_bodySize: 2
-  socialDistance: 5
---- !u!4 &1112155698
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1112155696}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1112155699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1112155696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41f1dfc8bcf28354fb551a4f8878c5a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chanceForPlanet: 15
-  planetoid: {fileID: 4738692903968649171, guid: 2b7dc2c798fd0694d89f7cfdd67f50e6, type: 3}
-  height: 100
-  width: 100
 --- !u!1 &1948002793
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,10 +309,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &1789457089111856212
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3001814404149901940, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_Name
+      value: PlanetParent
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.670175
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.4328418
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.625665
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: da51f699d773e354b96eb0487542dbca, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1948002796}
   - {fileID: 2125182151}
-  - {fileID: 1112155698}
+  - {fileID: 1789457089111856212}
