@@ -100,9 +100,9 @@ Material:
     - _Parallax: 0.02
     - _SkyCutoff: 0.2
     - _SkyCutoffBlend: 0
-    - _SkyDistortSpeed: 0.1
-    - _SkyDistortStrength: 0.06
-    - _SkyRotationSpeed: 0.1
+    - _SkyDistortSpeed: 0
+    - _SkyDistortStrength: 0.7
+    - _SkyRotationSpeed: 0.005
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
