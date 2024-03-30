@@ -17,8 +17,8 @@ public class ShipCore : MonoBehaviour
     void Update()
     {
         //DO NOT ROTATE THE SHIP WHEN PLAYER IS NOT PILOTING BTW
-        velocity = Vector3.MoveTowards(velocity, Vector3.zero, Time.deltaTime* 1f);
-        direction = Vector3.MoveTowards(direction, Vector3.zero, Time.deltaTime * 10f);
+        velocity = Vector3.MoveTowards(velocity, Vector3.zero, Time.deltaTime* 2f);
+        direction = Vector3.MoveTowards(direction, Vector3.zero, Time.deltaTime * 12f);
         if (GameManager.instance.Player.GetState() == GameManager.PlayerState.Piloting)
         {
             Vector3 prevVel = velocity;
@@ -27,7 +27,7 @@ public class ShipCore : MonoBehaviour
             direction += transform.TransformDirection(new Vector3(0, GameManager.instance.Player.GetPlayerInput().x, 0))/10;
 
         }
-        Debug.DrawRay(transform.position, velocity, Color.black);
+        Debug.DrawRay(transform.position+new Vector3(0,1,0), velocity, Color.blue);
 
         transform.position += velocity*Time.deltaTime;
         transform.Rotate(direction * Time.deltaTime, Space.Self);
