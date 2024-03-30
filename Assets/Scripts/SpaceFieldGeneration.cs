@@ -8,7 +8,7 @@ public class SpaceFieldGeneration : MonoBehaviour
     [SerializeField] private int chanceForPlanet;
     [SerializeField] private GameObject planetoid;
     [SerializeField] private GameObject planetParent;
-    [SerializeField] private Vector3 randomShift = new Vector3(0.5f, 0, 0.5f);
+    [SerializeField] private Vector3 maxShift;
     public bool regenMap = false;
     [SerializeField] private int planetSpacing = 10;
 
@@ -29,6 +29,7 @@ public class SpaceFieldGeneration : MonoBehaviour
     {
         if (regenMap)
         {
+            DestroyPlanets();
             GenerateMap();
             regenMap = false;
         }
@@ -65,7 +66,7 @@ public class SpaceFieldGeneration : MonoBehaviour
                 {
                     if (map[x, y] == 1)
                     {
-                        randomShift *= Random.value;
+                        Vector3 randomShift = maxShift * Random.value;
                         Vector3 position = new Vector3(-width / 2 + x + randomShift.x, randomShift.y, -height / 2 + y + randomShift.z);
                         GameObject newPlanetoid = Instantiate(planetoid, position, Quaternion.identity);
                         newPlanetoid.transform.SetParent(planetParent.transform, false);
@@ -81,6 +82,7 @@ public class SpaceFieldGeneration : MonoBehaviour
         for (int i = 0; i < planets.Count; i++)
         {
             Destroy(planets[i]);
+            planets.RemoveAt(i);
         }
     }
 }
