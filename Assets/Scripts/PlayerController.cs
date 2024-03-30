@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _xSens = .1f;
     [SerializeField] private float _ySens = .01f;
 
-    [SerializeField] private float movementSpeed = 3f;
+    [SerializeField] private float movementSpeed = 1.5f;
 
 
         private float clampNormal = 80f;
@@ -45,14 +45,14 @@ public class PlayerController : MonoBehaviour
             //Debug.Log(Move.ReadValue<Vector2>());
             Vector3 _transformedPlayerInput = transform.TransformDirection(new Vector3(Move.ReadValue<Vector2>().x, 0, Move.ReadValue<Vector2>().y));
 
-            Vector3 vel = new Vector3(_transformedPlayerInput.x, 0, _transformedPlayerInput.z);
+            Vector3 vel = new Vector3(_transformedPlayerInput.x, -.1f, _transformedPlayerInput.z);
             
             characterController.Move(movementSpeed * vel * Time.deltaTime);
         }
         else if(playerState == PlayerState.Piloting)
         {
             characterController.enabled = false;
-            transform.position = new Vector3(GameManager.instance.SteeringWheel.GetStandingPos().x,0, GameManager.instance.SteeringWheel.GetStandingPos().z);
+            transform.position = new Vector3(GameManager.instance.SteeringWheel.GetStandingPos().x,GameManager.instance.SteeringWheel.GetStandingPos().y, GameManager.instance.SteeringWheel.GetStandingPos().z);
             characterController.enabled = true;
             //transform.LookAt(GameManager.instance.SteeringWheel.transform.position);
             //do the controller shit
@@ -99,10 +99,10 @@ public class PlayerController : MonoBehaviour
     {
        characterController.Move(new Vector3(move.x, 0, move.z));
         //cam.transform.localRotation = Quaternion.Euler(rotate.x, 0, 0);
-        if(playerState == PlayerState.Piloting)
-        {
+        //if(playerState == PlayerState.Piloting)
+        //{
             transform.Rotate(rotate);
-       }
+       //}
 
     }
 
