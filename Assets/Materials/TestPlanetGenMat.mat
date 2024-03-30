@@ -45,6 +45,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _HighPassDeformation:
+        m_Texture: {fileID: 2800000, guid: f4087bb912669644381de373bc044c08, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LowPassDeformation:
+        m_Texture: {fileID: 2800000, guid: ffc9107f00dcdfc4d9d9a31d319aced6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 101826fe6be0419459f54e789076f263, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -66,7 +74,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SkyNoiseDistort:
-        m_Texture: {fileID: 2800000, guid: f4087bb912669644381de373bc044c08, type: 3}
+        m_Texture: {fileID: 2800000, guid: b94f491e4ba48694682a55807ca85e6f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -81,7 +89,11 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _MapScale: 2.61
+    - _HighPassDeformationStrength: 0.1
+    - _HighPassScale: 1.5
+    - _LowPassDeformationStrength: 0.79
+    - _LowPassScale: 0.3
+    - _MapScale: 0.61
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -100,5 +112,5 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 0.08627451}
-    - _SkyColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SkyColor: {r: 0.5588629, g: 0.55648506, b: 0.7106918, a: 1}
   m_BuildTextureStacks: []
