@@ -19,7 +19,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _xSens = .1f;
     [SerializeField] private float _ySens = .01f;
 
-    [SerializeField] private float movementSpeed = 3f;
+    [SerializeField] private float movementSpeed = 1.5f;
+
+
+        private float clampNormal = 80f;
+
+    private float clampA = 80f;
+    private float clampB = 80f;
+
+    private float clampPilotA = 0;
+    private float clampPilotB = 50;
     void Start()
     {
         Look.Enable();
@@ -33,13 +42,19 @@ public class PlayerController : MonoBehaviour
         if (playerState == PlayerState.Walking)
         {
             
-            Debug.Log(Move.ReadValue<Vector2>());
-            Vector3 vel = new Vector3(Move.ReadValue<Vector2>().x, 0, Move.ReadValue<Vector2>().y);
+            //Debug.Log(Move.ReadValue<Vector2>());
+            Vector3 _transformedPlayerInput = transform.TransformDirection(new Vector3(Move.ReadValue<Vector2>().x, 0, Move.ReadValue<Vector2>().y));
 
+            Vector3 vel = new Vector3(_transformedPlayerInput.x, -.1f, _transformedPlayerInput.z);
+            
             characterController.Move(movementSpeed * vel * Time.deltaTime);
         }
-        else
+        else if(playerState == PlayerState.Piloting)
         {
+            characterController.enabled = false;
+            transform.position = new Vector3(GameManager.instance.SteeringWheel.GetStandingPos().x,GameManager.instance.SteeringWheel.GetStandingPos().y, GameManager.instance.SteeringWheel.GetStandingPos().z);
+            characterController.enabled = true;
+            //transform.LookAt(GameManager.instance.SteeringWheel.transform.position);
             //do the controller shit
         }
     }
@@ -50,7 +65,7 @@ public class PlayerController : MonoBehaviour
         float mouseY = Look.ReadValue<Vector2>().y;
 
         _xRot -= (mouseY) * _ySens;
-        _xRot = Mathf.Clamp(_xRot, -80f, 80f);
+        _xRot = Mathf.Clamp(_xRot, -clampA, clampB);
         cam.transform.localRotation = Quaternion.Euler(_xRot, 0, 0);
         transform.Rotate(Vector3.up * (mouseX) * _xSens);
     }
@@ -58,15 +73,41 @@ public class PlayerController : MonoBehaviour
     public void SetState(GameManager.PlayerState state)
     {
         playerState = state;
+        if(playerState == PlayerState.Walking)
+        {
+            clampA = clampNormal;
+            clampB = clampNormal;
+        }
+
+        if (playerState == PlayerState.Piloting)
+        {
+            clampA = clampPilotA;
+            clampB = clampPilotB;
+        }
     }
 
+    public void SetRotation()
+    {
+
+    }
     public PlayerState GetState()
     {
         return playerState;
     }
 
-    public void MoveWithShip(Vector2 move)
+    public void MoveWithShip(Vector3 move,Vector3 rotate)
     {
-        characterController.Move(new Vector3(move.x, 0, move.y));
+       characterController.Move(new Vector3(move.x, 0, move.z));
+        //cam.transform.localRotation = Quaternion.Euler(rotate.x, 0, 0);
+        //if(playerState == PlayerState.Piloting)
+        //{
+            transform.Rotate(rotate);
+       //}
+
+    }
+
+    public Vector2 GetPlayerInput()
+    {
+        return Move.ReadValue<Vector2>();
     }
 }

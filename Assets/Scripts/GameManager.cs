@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
 
     public PlayerController Player;
+    public ShipController SteeringWheel;
 
     public static GameManager instance;
     public enum PlayerState
