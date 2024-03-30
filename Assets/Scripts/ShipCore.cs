@@ -7,6 +7,7 @@ public class ShipCore : MonoBehaviour
     // Start is called before the first frame update
 
     private Vector3 velocity;
+    private Vector3 direction;
     void Start()
     {
         
@@ -16,17 +17,27 @@ public class ShipCore : MonoBehaviour
     void Update()
     {
         //DO NOT ROTATE THE SHIP WHEN PLAYER IS NOT PILOTING BTW
-        Vector3.MoveTowards(velocity, Vector2.zero, Time.deltaTime* 0.01f);
+        velocity = Vector3.MoveTowards(velocity, Vector3.zero, Time.deltaTime* 1f);
+        direction = Vector3.MoveTowards(direction, Vector3.zero, Time.deltaTime * 10f);
         if (GameManager.instance.Player.GetState() == GameManager.PlayerState.Piloting)
         {
-            velocity+= transform.TransformDirection(new Vector3(GameManager.instance.Player.GetPlayerInput().x,0,GameManager.instance.Player.GetPlayerInput().y));
+            Vector3 prevVel = velocity;
+            velocity+= transform.TransformDirection(new Vector3(0,0,GameManager.instance.Player.GetPlayerInput().y))/100;
+            if (velocity.magnitude > 10 && velocity.magnitude > prevVel.magnitude) velocity = prevVel;
+            direction += transform.TransformDirection(new Vector3(0, GameManager.instance.Player.GetPlayerInput().x, 0))/10;
+
         }
+        Debug.DrawRay(transform.position, velocity, Color.black);
+
+        transform.position += velocity*Time.deltaTime;
+        transform.Rotate(direction * Time.deltaTime, Space.Self);
+         GameManager.instance.Player.MoveWithShip(velocity * Time.deltaTime, direction * Time.deltaTime);
         //Vector3 movementThisFrame = new Vector3(0, 0, 1);
         //Vector3 rotationThisFrame = new Vector3(0, 5, 0);
-        //transform.position += movementThisFrame*Time.deltaTime;
-        //transform.Rotate(rotationThisFrame * Time.deltaTime, Space.Self);
-       // GameManager.instance.Player.MoveWithShip(movementThisFrame*Time.deltaTime,rotationThisFrame * Time.deltaTime);
+
 
 
     }
+
+    
 }
