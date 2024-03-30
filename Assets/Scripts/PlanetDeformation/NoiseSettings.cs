@@ -24,6 +24,7 @@ public class NoiseSettings {
         public float persistence = .5f;
         public Vector3 centre;
         public float minValue;
+        public Texture2D noiseTexture;
     }
 
     [System.Serializable]
@@ -31,7 +32,4 @@ public class NoiseSettings {
     {
         public float weightMultiplier = .8f;
     }
-
-
-
 }

@@ -75,32 +75,6 @@ Shader "Custom/PlanetGen"
             float2 texcoordScroll;
         };
 
-        // float PerlinNoise4D(float x, float y, float z, float w)
-        // {
-        //     //X coordinate
-        //     float xy = noise2Dww(x, y);
-        //     float xz = noise2Dww(x, z);
-        //     float xw = noise2Dww(x, w);
-    
-        //     //Ycoordinate
-        //     float yx = noise2Dww(y, x);
-        //     float yz = noise2Dww(y, z);
-        //     float yw = noise2Dww(y, w);
-
-        //     //Z coordinate
-        //     float zx = noise2Dww(z, x);
-        //     float zy = noise2Dww(z, y);
-        //     float zw = noise2Dww(z, w);
-
-        //     //W coordinate
-        //     float wx = noise2Dww(w, x);
-        //     float wy = noise2Dww(w, y);
-        //     float wz = noise2Dww(w, z);
-    
-        //     return float(xy + xz + xw + yx + yz + yw + zx + zy + zw + wx + wy + wz)/12;
-        // }
-
-
         void vert(inout appdata_full v, out Input data)
         {
 
