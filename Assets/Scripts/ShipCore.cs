@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 
@@ -27,6 +28,7 @@ public class ShipCore : MonoBehaviour
     [SerializeField] AudioSource losingit;
 
 
+    public bool inOrbit = false;
     private bool stuff = false;
 
 
@@ -57,6 +59,18 @@ public class ShipCore : MonoBehaviour
         //isLoaded = true;
         if (isLoaded)
         {
+            if (inOrbit && currentFuel>0)
+            {
+                if (currentFuel < (maxFuel / 2) + 100 && velocity.magnitude < 1)
+                {
+                    currentFuel += Time.deltaTime * 10f;
+                    if (Random.Range(0, 10000) == 2)
+                    {
+                        GameManager.instance.monster.Pinged(transform.position);
+                    }
+                }
+            }
+
             fuelText.text = "Fuel: " + (int)currentFuel;
             var fuck = true;
 
@@ -84,10 +98,10 @@ public class ShipCore : MonoBehaviour
                     hum.volume=0;
                 }
 
-                if (velocity.magnitude > 10 && velocity.magnitude > previousVel.magnitude) velocity = previousVel;
+                if (velocity.magnitude > 20 && velocity.magnitude > previousVel.magnitude) velocity = previousVel;
                 if (direction.magnitude > 14 && direction.magnitude > previousDir.magnitude) direction = previousDir;
 
-                currentFuel -= GameManager.instance.Player.GetPlayerInput().magnitude * Time.deltaTime * 5;
+                currentFuel -= GameManager.instance.Player.GetPlayerInput().magnitude * Time.deltaTime * 30;
 
                 //Debug.Log(GameManager.instance.Player.GetPlayerInput());
 
@@ -128,5 +142,25 @@ public class ShipCore : MonoBehaviour
     public Vector3 GetVelocity()
     {
         return velocity;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.GetComponent<IndividualOffset>() != null && isLoaded)
+        {
+            Debug.Log("Out Of Orbit!");
+            inOrbit = false;
+
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.gameObject.GetComponent<IndividualOffset>() != null && isLoaded)
+        {
+            Debug.Log("In Orbit!");
+            inOrbit = true;
+            
+        }
     }
 }

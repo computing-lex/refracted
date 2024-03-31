@@ -233,7 +233,7 @@ public class Monster : MonoBehaviour
             }
         }
 
-        Debug.Log(killZone.ISBROHERE);
+        //Debug.Log(killZone.ISBROHERE);
 
         if(phase == MonsterPhase.FadeOut)
         {
