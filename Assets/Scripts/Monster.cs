@@ -117,6 +117,7 @@ public class Monster : MonoBehaviour
                 {
                     GameManager.instance.KillDaPlayer("MonsterSlow");
                     Debug.Log("Dead!!!");
+                    phase = MonsterPhase.Leaving;
                 }
 
                 else if (GameManager.instance.ShipCore.GetVelocity().magnitude > 5)
@@ -147,6 +148,8 @@ public class Monster : MonoBehaviour
             if (monsterTimer1 > monsterTimestamp)
             {
                 GameManager.instance.KillDaPlayer("Jumpscare");
+                phase = MonsterPhase.Leaving;
+
 
             }
         }
@@ -198,16 +201,20 @@ public class Monster : MonoBehaviour
                 monsterTimer2 = 0;
                 monsterTimestamp = Random.Range(1, 3);
 
+
             }
 
 
         }
 
-        if (bludIsDead)
+        if (bludIsDead && phase!=MonsterPhase.Leaving)
         {
             monsterTimer2 += Time.deltaTime;
             if (monsterTimer2 > monsterTimestamp)
             {
+                bludIsDead = false;
+                phase = MonsterPhase.Leaving;
+
                 GameManager.instance.KillDaPlayer("Jumpscare");
                 Debug.Log("Fuckhead");
             }

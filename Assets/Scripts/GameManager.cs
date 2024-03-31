@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class GameManager : MonoBehaviour
     private float timeToDie = 60;
 
     private bool jumpscareShit = false;
+
+    [SerializeField] private Image jumpscare;
     public enum GameState
     {
         Intro,
@@ -41,6 +44,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        jumpscare.enabled = false;
     }
     public IEnumerator LoadPlanets() {
         Debug.Log("Loading planets!");
@@ -86,10 +90,11 @@ public class GameManager : MonoBehaviour
         if (v.Equals("Jumpscare"))
         {
             jumpscareShit = true;
+            jumpscare.enabled = true;
             Player.DoAJumpscare();
         }else if (v.Equals("MonsterSlow"))
         {
-
+            //idk. kill
         }
         
     }
