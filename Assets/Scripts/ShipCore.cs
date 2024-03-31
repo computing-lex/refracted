@@ -24,6 +24,8 @@ public class ShipCore : MonoBehaviour
     [SerializeField] TextMeshProUGUI fuelText;
 
     [SerializeField] AudioSource hum;
+    [SerializeField] AudioSource losingit;
+
 
     private bool stuff = false;
 
@@ -65,6 +67,8 @@ public class ShipCore : MonoBehaviour
 
             if (GameManager.instance.Player.GetState() == GameManager.PlayerState.Piloting && currentFuel > 0)
             {
+                //GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
+
                 var previousVel = velocity;
                 var previousDir = direction;
 
@@ -97,7 +101,7 @@ public class ShipCore : MonoBehaviour
             if (currentFuel < 0 && !shutdownSound)
             {
                 hum.volume = 0;
-                GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
+                losingit.PlayOneShot(losingit.clip);
                 shutdownSound = true;
             }
 
