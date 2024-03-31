@@ -25,8 +25,9 @@ public class PlanetBlast : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Planet")) {
             if (counter < timeStamp ) {
-                //GameManager.instance.planetGenerator.planets.Find(x => other.gameObject)
+                GameManager.instance.planetGenerator.DestroyPlanet(other.GameObject());
             }
+            Debug.Log("LAZERBEAMED!!!!!");
         }
     }
 }

@@ -128,6 +128,12 @@ public class SpaceFieldGeneration : MonoBehaviour
             pm.SetTexture("_MainTex", rbase);
         }
     }
+
+    public void DestroyPlanet(GameObject toFind) {
+        Destroy(planets[planets.IndexOf(toFind)]);
+        planets.RemoveAt(planets.IndexOf(toFind));
+    }
+    
     private void DestroyPlanets()
     {
         for (int i = 0; i < planets.Count; i++)
