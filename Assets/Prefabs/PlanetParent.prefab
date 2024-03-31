@@ -26,7 +26,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.670175, y: -2.4328418, z: 6.625665}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4327399056959305137}
@@ -76,13 +76,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f1dfc8bcf28354fb551a4f8878c5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chanceForPlanet: 15
+  chanceForPlanet: 10
   planetoid: {fileID: 4738692903968649171, guid: 2b7dc2c798fd0694d89f7cfdd67f50e6, type: 3}
   planetParent: {fileID: 3001814404149901940}
-  maxShift: {x: 10, y: 10, z: 10}
+  maxShift: {x: 1, y: 5, z: 1}
   regenMap: 0
-  planetSpacing: 10
-  height: 1000
-  width: 1000
+  planetSpacing: 5
+  height: 100
+  width: 100
+  scaleX: 100
+  scaleY: 100
+  planetScale: {x: 50, y: 50, z: 50}
   PlanetMaterial: {fileID: 2100000, guid: e5a8f2e0a07c59340b78722d0e37eb25, type: 2}
   shapeSettings: {fileID: 11400000, guid: bb563e90654574d4cb7d931456630f79, type: 2}

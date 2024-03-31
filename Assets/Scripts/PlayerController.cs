@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerState playerState;
     private CharacterController characterController;
+    public Transform playerSpawnPoint;
     [SerializeField] private Camera cam;
 
     [SerializeField] private float _xRot = 0f;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private bool startBreathing = false;
     void Start()
     {
+        transform.position = playerSpawnPoint.position;
         Cursor.lockState = CursorLockMode.Locked;
         Look.Enable();
         Move.Enable();

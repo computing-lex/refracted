@@ -9,6 +9,8 @@ public class ShipCore : MonoBehaviour
 
     private Vector3 velocity;
     private Vector3 direction;
+    [SerializeField] private SpaceFieldGeneration planetGen;
+    [SerializeField] private Vector3 spawnOffset;
 
     // Fuel Values
     public float maxFuel = 1000;
@@ -23,6 +25,12 @@ public class ShipCore : MonoBehaviour
     void Start()
     {
         currentFuel = Random.Range(0.5f, 0.6f) * maxFuel; //start with 500-600 fuel
+        
+        Vector3 newPosition = planetGen.planets[Random.Range(0, planetGen.planets.Count)].transform.position;
+        newPosition += spawnOffset;
+
+        transform.position = newPosition;
+        
     }
 
     // Update is called once per frame

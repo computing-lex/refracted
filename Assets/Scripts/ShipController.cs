@@ -7,13 +7,14 @@ public class ShipController : MonoBehaviour, IInteractable
 {
 
     [SerializeField] private Transform standingPos;
+    [SerializeField] private Vector3 spawnOffset;
 
     private float leftShift = -30;
     private float rightShift = 30;
     // Start is called before the first frame update
     void Start()
-    {
-        
+    {  
+
     }
 
     void Update()

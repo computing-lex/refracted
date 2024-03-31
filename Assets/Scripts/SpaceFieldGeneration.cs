@@ -20,7 +20,7 @@ public class SpaceFieldGeneration : MonoBehaviour
 
     [SerializeField] public Material PlanetMaterial;
     [SerializeField] public ShapeSettings shapeSettings;
-    private List<GameObject> planets = new List<GameObject>();
+    public List<GameObject> planets = new List<GameObject>();
 
     // Generates new planet array randomly
     void Start()
@@ -74,6 +74,7 @@ public class SpaceFieldGeneration : MonoBehaviour
                     {
                         Vector2 scaledMapPos = new(x * scaleX, y * scaleY);
                         Vector3 randomShift = maxShift * Random.value;
+                        randomShift = new Vector3(randomShift.x * scaleX, randomShift.y, randomShift.z * scaleY);
                         Vector3 position = new(width / 2 + scaledMapPos.x + randomShift.x, randomShift.y, height / 2 + scaledMapPos.y + randomShift.z);
 
                         GameObject newPlanetoid = Instantiate(planetoid, position, Quaternion.identity);
