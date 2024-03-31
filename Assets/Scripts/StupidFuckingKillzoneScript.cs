@@ -10,7 +10,7 @@ public class StupidFuckingKillzoneScript : MonoBehaviour
     public bool ISBROHERE;
 
     float a = 0;
-    float stamp = 5;
+    float stamp = 1;
     void Start()
     {
         

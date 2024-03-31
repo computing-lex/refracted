@@ -29,6 +29,11 @@ public class ShipCore : MonoBehaviour
 
 
     public bool inOrbit = false;
+
+    private float orbitTimer=0;
+    private float orbitEvilTime;
+
+
     private bool stuff = false;
 
 
@@ -61,13 +66,16 @@ public class ShipCore : MonoBehaviour
         {
             if (inOrbit && currentFuel>0)
             {
+
+                orbitTimer += Time.deltaTime;
+                if(orbitTimer> orbitEvilTime)
+                {
+                    GameManager.instance.monster.Pinged(transform.position);
+                }
                 if (currentFuel < (maxFuel / 2) + 100 && velocity.magnitude < 1)
                 {
                     currentFuel += Time.deltaTime * 10f;
-                    if (Random.Range(0, 10000) == 2)
-                    {
-                        GameManager.instance.monster.Pinged(transform.position);
-                    }
+                    
                 }
             }
 
@@ -159,6 +167,7 @@ public class ShipCore : MonoBehaviour
         if (other.gameObject.GetComponent<IndividualOffset>() != null && isLoaded)
         {
             Debug.Log("In Orbit!");
+            orbitEvilTime = Random.Range(20, 70);
             inOrbit = true;
             
         }

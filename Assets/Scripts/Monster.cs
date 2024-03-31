@@ -136,25 +136,12 @@ public class Monster : MonoBehaviour
             if(monsterTimer1 > monsterTimestamp)
             {
                 
-                if (Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position) < 200)
-                {
-                    GameManager.instance.KillDaPlayer("MonsterSlow");
-                    Debug.Log("Dead!!!");
-                    phase = MonsterPhase.Leaving;
-                }
+               
 
-                else if (GameManager.instance.ShipCore.GetVelocity().magnitude > 5)
-                {
-                    monsterTimer1 = 0;
-                    monsterTimestamp = Random.Range(5, 20);
-                    phase = MonsterPhase.Kill;
-                }
-
-                else
-                {
+                
                     monsterTimer1 = 0;
                     phase = MonsterPhase.StartScan;
-                }
+                
                 
             }
 
@@ -177,13 +164,24 @@ public class Monster : MonoBehaviour
             }
         }
 
+       // Debug.Log(Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position));
         if (phase == MonsterPhase.StartScan)
         {
+
+           
             lightCurrent = 0;
             light.intensity = lightCurrent;
             transform.LookAt(GameManager.instance.Player.transform.position);
             transform.position = waypoint1.transform.position;
             phase = MonsterPhase.Scanning;
+            if (Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position) < 50)
+            {
+                Debug.Log("Dead!!!");
+                bludIsDead = true;
+                phase = MonsterPhase.Leaving;
+                GameManager.instance.KillDaPlayer("MonsterSlow");
+
+            }
         }
 
         if(phase== MonsterPhase.Scanning)
@@ -233,7 +231,7 @@ public class Monster : MonoBehaviour
             }
         }
 
-        //Debug.Log(killZone.ISBROHERE);
+       // Debug.Log(killZone.ISBROHERE);
 
         if(phase == MonsterPhase.FadeOut)
         {
@@ -309,13 +307,16 @@ public class Monster : MonoBehaviour
     }
     public void Pinged(Vector3 pos)
     {
-        if (Random.Range(0, 10) != 1)
+        if (phase == MonsterPhase.Unaware)
         {
-            phase = MonsterPhase.Pinged;
-            monsterTimestamp = Random.Range(2, 5);
-            monsterTimer1 = 0;
-            //roarAudioSourceFar.PlayOneShot(roarAudioSourceFar.clip);
-            locatedPos = pos;
+            if (Random.Range(0, 4) == 1)
+            {
+                phase = MonsterPhase.Pinged;
+                monsterTimestamp = Random.Range(2, 5);
+                monsterTimer1 = 0;
+                //roarAudioSourceFar.PlayOneShot(roarAudioSourceFar.clip);
+                locatedPos = pos;
+            }
         }
     }
 

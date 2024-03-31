@@ -103,6 +103,9 @@ public class GameManager : MonoBehaviour
             Player.DoAJumpscare();
         }else if (v.Equals("MonsterSlow"))
         {
+            jumpscareShit = true;
+            jumpscare.enabled = true;
+            Player.DoAJumpscare();
             //idk. kill
         }
         
