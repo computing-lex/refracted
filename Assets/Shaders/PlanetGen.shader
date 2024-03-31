@@ -120,7 +120,7 @@ Shader "Custom/PlanetGen"
             color = lerp(color, float4(_FresnelColor.rgb, 1), IN.fresnel * _FresnelColor.a);
 
             o.Albedo = color.rgb;
-            o.Emission = color.rgb * atm;
+            // o.Emission = color.rgb * atm;
             o.Alpha = color.a;
 
         #ifdef _NORMALMAP
@@ -129,7 +129,9 @@ Shader "Custom/PlanetGen"
             half4 ny = tex2D(_BumpMap, ty) * bf.y;
             half4 nz = tex2D(_BumpMap, tz) * bf.z;
             half3 final_normal = UnpackScaleNormal(nx + ny + nz, _BumpScale);
-            final_normal = lerp(final_normal, IN.localNormal, atm);
+            // This is a small brain solution but it fucking works, leave me alone
+            half3 sky_normal = UnpackScaleNormal(float4(0.5, 0.5, 1.0, 1.0), _BumpScale);
+            final_normal = lerp(final_normal, sky_normal, atm);
             o.Normal = final_normal;
         #endif
 
