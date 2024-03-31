@@ -55,5 +55,6 @@ public class TerrainFace {
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+        
     }
 }

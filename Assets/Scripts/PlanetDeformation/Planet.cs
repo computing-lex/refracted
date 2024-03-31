@@ -42,17 +42,19 @@ public class Planet : MonoBehaviour {
             if (meshFilters[i] == null)
             {
                 GameObject meshObj = new GameObject("mesh");
+                
                 meshObj.transform.SetParent(transform);
+                meshObj.transform.position = new Vector3(0,0,0);
                 //meshObj.transform.parent = transform;
                 meshObj.AddComponent<MeshRenderer>().sharedMaterial = PlanetMaterial;
                 meshFilters[i] = meshObj.AddComponent<MeshFilter>();
                 meshFilters[i].sharedMesh = new Mesh();
+                
             }
 
             terrainFaces[i] = new TerrainFace(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
             bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
             meshFilters[i].gameObject.SetActive(renderFace);
-
             meshFilters[i].gameObject.GetComponent<Renderer>().material = PlanetMaterial;
         }
     }

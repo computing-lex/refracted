@@ -15,6 +15,7 @@ public class SpaceFieldGeneration : MonoBehaviour
     // Map generation parameters 
     [SerializeField] private int height, width;
     [SerializeField] private int scaleX, scaleY;
+    public Vector3 planetScale;
     [SerializeField] private int[,] map;
 
     [SerializeField] public Material PlanetMaterial;
@@ -73,7 +74,7 @@ public class SpaceFieldGeneration : MonoBehaviour
                     {
                         Vector2 scaledMapPos = new(x * scaleX, y * scaleY);
                         Vector3 randomShift = maxShift * Random.value;
-                        Vector3 position = new(width / 2 + scaledMapPos.x + .5f, 0, height / 2 + scaledMapPos.y + .5f);
+                        Vector3 position = new(width / 2 + scaledMapPos.x + randomShift.x, randomShift.y, height / 2 + scaledMapPos.y + randomShift.z);
 
                         GameObject newPlanetoid = Instantiate(planetoid, position, Quaternion.identity);
 
@@ -82,6 +83,14 @@ public class SpaceFieldGeneration : MonoBehaviour
                         planets.Add(newPlanetoid);
 
                         InitializePlanet(newPlanetoid);
+                        foreach (var planetPosition in newPlanetoid.GetComponentsInChildren<Transform>())
+                        {
+                            planetPosition.position = new Vector3(0,0,0);
+                        }
+
+                        newPlanetoid.transform.position = position;
+                        newPlanetoid.transform.SetParent(planetParent.transform, true);
+                        newPlanetoid.transform.localScale = planetScale;
                     }
                 }
             }
@@ -95,6 +104,7 @@ public class SpaceFieldGeneration : MonoBehaviour
         planetComponent.shapeSettings = shapeSettings;
         planetComponent.GeneratePlanet();
         RandomizeMaterial(newPlanetoid);
+        Debug.Log("Planet generated at " + newPlanetoid.transform.position.ToString());
     }
 
     private void RandomizeMaterial(GameObject newPlanetoid)
