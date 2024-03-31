@@ -9,7 +9,7 @@ public class DelieveryManager : MonoBehaviour
     [SerializeField] public DeliveryList deliveryList;
     public TextAsset deliveryContents;
 
-    [SerializeField] private Package currentDelivery;
+    [SerializeField] public Package currentDelivery;
     public int DeliveriesCompleted { get; private set; }
 
     // The delieveries that can be made, a list of packages
@@ -23,12 +23,15 @@ public class DelieveryManager : MonoBehaviour
     [Serializable]
     public class Package
     {
-        public int[,] destination;
+        public int destinationX;
+        public int destinationY;
         public string contents;
         public PackageType type;
 
         public Package()
         {
+            destinationX = 0;
+            destinationY = 0;
             contents = "No content defined.";
         }
 
