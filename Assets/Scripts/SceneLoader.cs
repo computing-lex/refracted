@@ -100,6 +100,7 @@ public class SceneLoader : MonoBehaviour
         //CHANGE ONCE SCENES ARE TOGETHER
         //SceneManager.UnloadScene("MainMenu");
         Debug.Log("Starting Game...");
+        MoveToScene(1);
     }
 
     public void openSettings()
@@ -110,5 +111,9 @@ public class SceneLoader : MonoBehaviour
     public void resumeGame()
     {
         Debug.Log("Resuming Game...");
+    }
+
+    public void MoveToScene(int sceneID) {
+        SceneManager.LoadScene(sceneID);
     }
 }

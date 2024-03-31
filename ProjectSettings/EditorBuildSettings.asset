@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/alexis but epic.unity
-    guid: 966c584a431ec4243951dffef533c29a
   - enabled: 1
-    path: Assets/Scenes/alexis.unity
-    guid: d15bd388a289f254588eb5c480fafa58
+    path: Assets/Scenes/Menu UI.unity
+    guid: c8c56f6f70d2f1541b148211187253d2
+  - enabled: 1
+    path: Assets/Scenes/alexisButMail.unity
+    guid: 12be99fe91be5d04bb34c8e6d615bdf1
   - enabled: 1
     path: Assets/Scenes/DeathScene.unity
-    guid: 691c61711c4a3b54ba9d7726dba1a29f
+    guid: a13aaa83f8bec334da9d99bc15399c2c
   m_configObjects: {}
