@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &34876841 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4111192005003911307, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
+  m_PrefabInstance: {fileID: 4090422960438245020}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 553d84ec659efd2428723df4ed125de0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &125230591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -175,6 +186,14 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 422676277}
+    - target: {fileID: 7330017020071213235, guid: 08a2c2251835023488bdc305f6e5281b, type: 3}
+      propertyPath: ShipCore
+      value: 
+      objectReference: {fileID: 34876841}
+    - target: {fileID: 7330017020071213235, guid: 08a2c2251835023488bdc305f6e5281b, type: 3}
+      propertyPath: SteeringWheel
+      value: 
+      objectReference: {fileID: 1493017841}
     - target: {fileID: 8923899422901093572, guid: 08a2c2251835023488bdc305f6e5281b, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -184,6 +203,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08a2c2251835023488bdc305f6e5281b, type: 3}
+--- !u!114 &302681185 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6179906137259015271, guid: 272822dcdbacb3045aa7983416101661, type: 3}
+  m_PrefabInstance: {fileID: 598180537}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &422676276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -361,30 +391,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlanetParent
       objectReference: {fileID: 0}
-    - target: {fileID: 4327399056959305137, guid: da51f699d773e354b96eb0487542dbca, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4327399056959305137, guid: da51f699d773e354b96eb0487542dbca, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4327399056959305137, guid: da51f699d773e354b96eb0487542dbca, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -425,19 +431,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8013511549872953701, guid: da51f699d773e354b96eb0487542dbca, type: 3}
-      propertyPath: randomShift.y
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+--- !u!114 &1493017841 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1372113777651969061, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
+  m_PrefabInstance: {fileID: 4090422960438245020}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fac176682fb0d4594d17e6d95988e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4090422960438245020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -446,10 +455,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 440462609346371324, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3717028876014660585, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -490,29 +495,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4111192005003911307, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
+      propertyPath: fuelText
+      value: 
+      objectReference: {fileID: 302681185}
     - target: {fileID: 4410311491028881770, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
       propertyPath: m_Name
       value: Ship
-      objectReference: {fileID: 0}
-    - target: {fileID: 4635404615547175397, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
-      propertyPath: m_Intensity
-      value: 1.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 4635404615547175397, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
-      propertyPath: m_Shadows.m_Bias
-      value: 0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 4635404615547175397, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4635404615547175397, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
-      propertyPath: m_BounceIntensity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4635404615547175397, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
-      propertyPath: m_Shadows.m_NormalBias
-      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

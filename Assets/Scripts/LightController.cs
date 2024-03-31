@@ -6,7 +6,7 @@ public class LightController : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private Light light;
+    private Light shipLight;
     private AudioSource source;
 
     private float flickerDelay = 50;
@@ -23,7 +23,7 @@ public class LightController : MonoBehaviour
     private bool hasPlayed = false;
     void Start()
     {   
-        light = GetComponent<Light>();
+        shipLight = GetComponent<Light>();
         source = GetComponent<AudioSource>();
     }
 
@@ -43,10 +43,10 @@ public class LightController : MonoBehaviour
                     source.PlayOneShot(source.clip);
                     hasPlayed = true;
                 }
-                light.enabled = false;
+                shipLight.enabled = false;
             }
 
-            if (!light.enabled)
+            if (!shipLight.enabled)
             {
                 offCounter += Time.deltaTime;
                 if (offCounter > offTime)
@@ -54,7 +54,7 @@ public class LightController : MonoBehaviour
                     offCounter = 0;
                     flickerCounter = 0;
                     flickerDelay = Random.Range(flickerLow, flickerHigh);
-                    light.enabled = true;
+                    shipLight.enabled = true;
                     hasPlayed = false;
                 }
             }
@@ -113,7 +113,7 @@ public class LightController : MonoBehaviour
         }
         else
         {
-            light.enabled = false;
+            shipLight.enabled = false;
         }
 
     }
