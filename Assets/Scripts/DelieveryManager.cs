@@ -31,6 +31,11 @@ public class DelieveryManager : MonoBehaviour
         {
             contents = "No content defined.";
         }
+
+        public Package(int[,] location)
+        {
+            contents = "No content defined.";
+        }
     }
     
     public enum PackageType
@@ -62,11 +67,11 @@ public class DelieveryManager : MonoBehaviour
 
     public void GeneratePackage()
     {
-
+        currentDelivery = new Package();
     }
 
     public Package GetPackage() {
-        
+
         return currentDelivery;
     }
 }

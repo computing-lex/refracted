@@ -81,18 +81,21 @@ public class SpaceFieldGeneration : MonoBehaviour
                         GameObject newPlanetoid = Instantiate(planetoid, position, Quaternion.identity);
 
                         //newPlanetoid.transform.SetParent(planetParent.transform, true);
-                        newPlanetoid.name = "Planetoid " + x + ", " + y;
+                        newPlanetoid.name = x + " " + y;
                         planets.Add(newPlanetoid);
 
                         InitializePlanet(newPlanetoid);
                         foreach (var planetPosition in newPlanetoid.GetComponentsInChildren<Transform>())
                         {
-                            if(planetPosition.gameObject.name != "planetIcon") {
+                            if (planetPosition.gameObject.name != "planetIcon")
+                            {
                                 planetPosition.position = new Vector3(0, 0, 0);
-                            } else {
-                                planetPosition.position = new Vector3(0,20,0);
                             }
-                            
+                            else
+                            {
+                                planetPosition.position = new Vector3(0, 20, 0);
+                            }
+
                         }
 
                         newPlanetoid.transform.position = position;
@@ -133,8 +136,14 @@ public class SpaceFieldGeneration : MonoBehaviour
             pm.SetTexture("_MainTex", rbase);
         }
     }
+    
+    public GameObject getPlanet()
+    {
+        return planets[0];
+    }
 
-    public void DestroyPlanet(GameObject toFind) {
+    public void DestroyPlanet(GameObject toFind)
+    {
         Destroy(planets[planets.IndexOf(toFind)]);
         planets.RemoveAt(planets.IndexOf(toFind));
     }
