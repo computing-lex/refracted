@@ -15,6 +15,9 @@ public class SpaceFieldGeneration : MonoBehaviour
     [SerializeField] private int height;
     [SerializeField] private int width;
     [SerializeField] private int[,] map;
+
+    [SerializeField] public Material PlanetMaterial;
+    [SerializeField] public ShapeSettings shapeSettings;
     private List<GameObject> planets = new List<GameObject>();
     
     // Generates new planet array randomly
@@ -76,14 +79,37 @@ public class SpaceFieldGeneration : MonoBehaviour
                         newPlanetoid.name = "Planetoid " + x + ", " + y;
                         planets.Add(newPlanetoid);
 
-                        // !: Call function from component
-                        newPlanetoid.GetComponent<IndividualOffset>().Lol();
+                        InitializePlanet(newPlanetoid);
                     }
                 }
             }
         }
     }
 
+    private void InitializePlanet(GameObject newPlanetoid)
+    {
+        Planet planetComponent = newPlanetoid.AddComponent<Planet>();
+        planetComponent.PlanetMaterial = PlanetMaterial;
+        planetComponent.shapeSettings = shapeSettings;
+        planetComponent.GeneratePlanet();
+        newPlanetoid.transform.localPosition = new Vector3(0,0,0);
+        RandomizeMaterial(newPlanetoid);
+    }
+    private void RandomizeMaterial(GameObject newPlanetoid)
+    {
+        MeshRenderer[] renderer = newPlanetoid.GetComponentsInChildren<MeshRenderer>();
+        Texture2D[] skyTextures = Resources.LoadAll<Texture2D>("PlanetSkies");
+        Texture2D rsky = skyTextures[Random.Range(0, skyTextures.Length)];
+        Texture2D[] baseTextures = Resources.LoadAll<Texture2D>("PlanetBases");
+        Texture2D rbase = baseTextures[Random.Range(0, baseTextures.Length)];
+
+        foreach (MeshRenderer r in renderer)
+        {
+            Material pm = r.material;
+            pm.SetTexture("_SkyNoise", rsky);
+            pm.SetTexture("_MainTex", rbase);
+        }
+    }
     private void DestroyPlanets() {
         for (int i = 0; i < planets.Count; i++)
         {
