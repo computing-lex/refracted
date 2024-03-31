@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class DelieveryManager : MonoBehaviour
@@ -9,7 +11,7 @@ public class DelieveryManager : MonoBehaviour
     [SerializeField] public DeliveryList deliveryList;
     public TextAsset deliveryContents;
 
-    [SerializeField] private Package currentDelivery;
+    [SerializeField] public Package currentDelivery;
     public int DeliveriesCompleted { get; private set; }
 
     // The delieveries that can be made, a list of packages
@@ -23,18 +25,16 @@ public class DelieveryManager : MonoBehaviour
     [Serializable]
     public class Package
     {
-        public int[,] destination;
+        public int destinationX;
+        public int destinationY;
         public string contents;
         public PackageType type;
 
         public Package()
         {
-            contents = "No content defined.";
-        }
-
-        public Package(int[,] location)
-        {
-            contents = "No content defined.";
+            destinationX = 0;
+            destinationY = 0;
+            contents = "";
         }
     }
     
@@ -62,12 +62,18 @@ public class DelieveryManager : MonoBehaviour
     public void DeliverPackage()
     {
         DeliveriesCompleted++;
-        Debug.Log("Package delivered!");
+        Debug.Log("Package Delivered!");
+        currentDelivery = new Package();
     }
 
-    public void GeneratePackage()
+    public void GeneratePackage(GameObject planet)
     {
         currentDelivery = new Package();
+        Package del = deliveryList.deliveries[UnityEngine.Random.Range(0, deliveryList.deliveries.Length)];
+        MatchCollection mc = Regex.Matches(planet.name, @"\b(\d+) (\d+)\b");
+        int.TryParse(mc[0].Groups[1].Value, out currentDelivery.destinationX);
+        int.TryParse(mc[0].Groups[2].Value, out currentDelivery.destinationY);
+        currentDelivery.contents = del.contents;
     }
 
     public Package GetPackage() {

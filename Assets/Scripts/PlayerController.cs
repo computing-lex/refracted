@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Look.Enable();
         Move.Enable();
         characterController = GetComponent<CharacterController>();
@@ -62,13 +63,17 @@ public class PlayerController : MonoBehaviour
 
         if (playerState == PlayerState.Walking)
         {
-
             //Debug.Log(Move.ReadValue<Vector2>());
             Vector3 _transformedPlayerInput = transform.TransformDirection(new Vector3(Move.ReadValue<Vector2>().x, 0, Move.ReadValue<Vector2>().y));
 
             Vector3 vel = new Vector3(_transformedPlayerInput.x, 0, _transformedPlayerInput.z);
 
             characterController.Move((movementSpeed * vel) * Time.deltaTime);
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Look.Enable();
+            Move.Enable();
         }
         else if (playerState == PlayerState.Piloting)
         {
@@ -77,8 +82,19 @@ public class PlayerController : MonoBehaviour
             characterController.enabled = true;
             //transform.LookAt(GameManager.instance.SteeringWheel.transform.position);
             //do the controller shit
-        }
 
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Look.Enable();
+            Move.Disable();
+        }
+        else if (playerState == PlayerState.Extra)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Look.Disable();
+            Move.Disable();
+        }
     }
 
     private void LateUpdate()
