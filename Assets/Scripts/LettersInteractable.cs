@@ -22,6 +22,8 @@ public class LettersInteractable : MonoBehaviour, IInteractable
     {
         if (GameManager.instance.Player.GetState() == GameManager.PlayerState.Walking)
         {
+            GameManager.instance.delievery.GeneratePackage(GameManager.instance.planetGenerator.getPlanet());
+
             GameManager.instance.Player.SetState(GameManager.PlayerState.Extra);
             LettersUIRoot.SetActive(true);
             string content = GameManager.instance.delievery.currentDelivery.contents;

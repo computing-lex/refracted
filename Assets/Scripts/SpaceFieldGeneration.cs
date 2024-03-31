@@ -139,7 +139,8 @@ public class SpaceFieldGeneration : MonoBehaviour
     
     public GameObject getPlanet()
     {
-        return planets[0];
+        int idx = Random.Range(0, planets.Count);
+        return planets[idx];
     }
 
     public void DestroyPlanet(GameObject toFind)
