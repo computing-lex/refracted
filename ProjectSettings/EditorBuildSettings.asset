@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/alexis but epic.unity
+    guid: 966c584a431ec4243951dffef533c29a
   m_configObjects: {}

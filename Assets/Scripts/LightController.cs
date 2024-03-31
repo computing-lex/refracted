@@ -42,6 +42,11 @@ public class LightController : MonoBehaviour
                 {
                     source.PlayOneShot(source.clip);
                     hasPlayed = true;
+
+                    if (Random.Range(0, 10) == 1)
+                    {
+                        offCounter = -2;
+                    }
                 }
                 shipLight.enabled = false;
             }
@@ -49,6 +54,7 @@ public class LightController : MonoBehaviour
             if (!shipLight.enabled)
             {
                 offCounter += Time.deltaTime;
+                
                 if (offCounter > offTime)
                 {
                     offCounter = 0;
