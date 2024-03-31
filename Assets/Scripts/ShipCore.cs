@@ -17,10 +17,12 @@ public class ShipCore : MonoBehaviour
     public float currentFuel;
 
     // UI
-    public TextMeshProUGUI fuelText;
     private bool shutdownSound = false;
 
     [SerializeField] AudioClip breathing;
+    [SerializeField] TextMeshProUGUI thingy;
+    [SerializeField] TextMeshProUGUI fuelText;
+
 
     void Start()
     {
@@ -52,7 +54,7 @@ public class ShipCore : MonoBehaviour
             velocity += new Vector3(0, 0, GameManager.instance.Player.GetPlayerInput().y * 10 * Time.deltaTime);
             direction += new Vector3(0, GameManager.instance.Player.GetPlayerInput().x * 15 * Time.deltaTime, 0);
 
-            if (velocity.magnitude > 12 && velocity.magnitude > previousVel.magnitude) velocity = previousVel;
+            if (velocity.magnitude > 10 && velocity.magnitude > previousVel.magnitude) velocity = previousVel;
             if (direction.magnitude > 14 && direction.magnitude > previousDir.magnitude) direction = previousDir;
             
             currentFuel -= GameManager.instance.Player.GetPlayerInput().magnitude * Time.deltaTime * 10;
@@ -82,9 +84,10 @@ public class ShipCore : MonoBehaviour
         //Vector3 movementThisFrame = new Vector3(0, 0, 1);
         //Vector3 rotationThisFrame = new Vector3(0, 5, 0);
 
+        thingy.SetText("Vel: " + (velocity.magnitude).ToString("F1"));
 
 
     }
 
-    
+
 }
