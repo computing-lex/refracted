@@ -290,6 +290,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6179906137259015271, guid: 272822dcdbacb3045aa7983416101661, type: 3}
+      propertyPath: m_text
+      value: fuel data
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179906137259015271, guid: 272822dcdbacb3045aa7983416101661, type: 3}
+      propertyPath: m_margin.x
+      value: 13.856903
+      objectReference: {fileID: 0}
     - target: {fileID: 6763237792080858904, guid: 272822dcdbacb3045aa7983416101661, type: 3}
       propertyPath: m_Name
       value: UI
@@ -390,6 +398,18 @@ PrefabInstance:
     - target: {fileID: 3001814404149901940, guid: da51f699d773e354b96eb0487542dbca, type: 3}
       propertyPath: m_Name
       value: PlanetParent
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7641021337714562765, guid: da51f699d773e354b96eb0487542dbca, type: 3}
       propertyPath: m_LocalPosition.x

@@ -1,0 +1,18 @@
+{
+    "deliveries": [
+        {
+            "destination": [
+                0,
+                0
+            ],
+            "contents": "text here"
+        },
+        {
+            "destination": [
+                0,
+                0
+            ],
+            "contents": "text here"
+        }
+    ]
+}
