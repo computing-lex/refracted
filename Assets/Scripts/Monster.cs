@@ -136,7 +136,7 @@ public class Monster : MonoBehaviour
             if(monsterTimer1 > monsterTimestamp)
             {
                 
-                if (Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position) < 200)
+                if (Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position) < 50)
                 {
                     GameManager.instance.KillDaPlayer("MonsterSlow");
                     Debug.Log("Dead!!!");
