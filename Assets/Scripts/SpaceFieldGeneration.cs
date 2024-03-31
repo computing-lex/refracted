@@ -15,8 +15,9 @@ public class SpaceFieldGeneration : MonoBehaviour
     [SerializeField] private int height;
     [SerializeField] private int width;
     [SerializeField] private int[,] map;
-    private List<GameObject> planets;
-
+    private List<GameObject> planets = new List<GameObject>();
+    
+    // Generates new planet array randomly
     void Start()
     {
         map = new int[width, height];
@@ -68,10 +69,15 @@ public class SpaceFieldGeneration : MonoBehaviour
                     {
                         Vector3 randomShift = maxShift * Random.value;
                         Vector3 position = new Vector3(-width / 2 + x + randomShift.x, randomShift.y, -height / 2 + y + randomShift.z);
+                        
                         GameObject newPlanetoid = Instantiate(planetoid, position, Quaternion.identity);
+
                         newPlanetoid.transform.SetParent(planetParent.transform, false);
                         newPlanetoid.name = "Planetoid " + x + ", " + y;
                         planets.Add(newPlanetoid);
+
+                        // !: Call function from component
+                        newPlanetoid.GetComponent<IndividualOffset>().Lol();
                     }
                 }
             }
