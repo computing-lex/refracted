@@ -8,6 +8,9 @@ public class StupidFuckingKillzoneScript : MonoBehaviour
     // Start is called before the first frame update
 
     public bool ISBROHERE;
+
+    float a = 0;
+    float stamp = 5;
     void Start()
     {
         
@@ -16,7 +19,12 @@ public class StupidFuckingKillzoneScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        a += Time.deltaTime;
+        if (a > stamp)
+        {
+            ISBROHERE = false;
+            a = 0;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,6 +36,7 @@ public class StupidFuckingKillzoneScript : MonoBehaviour
 
             //Debug.Log(ISBROHERE);
         }
+       
 
     }
 }

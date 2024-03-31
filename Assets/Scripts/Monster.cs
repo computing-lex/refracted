@@ -68,7 +68,7 @@ public class Monster : MonoBehaviour
     {
         staticSource = GetComponent<AudioSource>();
         staticSource.volume = 0f;
-        Pinged(Vector3.zero);
+        //Pinged(Vector3.zero);
     }
 
     // Update is called once per frame
@@ -127,9 +127,11 @@ public class Monster : MonoBehaviour
 
         if(phase == MonsterPhase.Approaching)
         {
+            Debug.Log(Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position));
             monsterTimer1 += Time.deltaTime;
             if(monsterTimer1 > monsterTimestamp)
             {
+                
                 if (Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position) < 200)
                 {
                     GameManager.instance.KillDaPlayer("MonsterSlow");
@@ -180,6 +182,7 @@ public class Monster : MonoBehaviour
 
         if(phase== MonsterPhase.Scanning)
         {
+            monsterTimer2 += Time.deltaTime;
             transform.LookAt(GameManager.instance.Player.transform.position);
             transform.position=Vector3.MoveTowards(transform.position,waypoint2.transform.position,20f*Time.deltaTime);
             if (transform.position.Equals(waypoint2.transform.position))
@@ -187,6 +190,7 @@ public class Monster : MonoBehaviour
                 if (Random.Range(0, 4) == 2)
                 {
                     phase = MonsterPhase.ScanAgain;
+                    monsterTimer2 = 0;
                 }
                 else
                 {
@@ -194,18 +198,31 @@ public class Monster : MonoBehaviour
                 }
             }
 
+            if (monsterTimer2 > 30)
+            {
+                phase = MonsterPhase.Unaware;
+            }
+
         }
 
         if (phase == MonsterPhase.ScanAgain)
         {
+            monsterTimer2 += Time.deltaTime;
+
             transform.LookAt(GameManager.instance.Player.transform.position);
             transform.position = Vector3.MoveTowards(transform.position, waypoint1.transform.position, 15f * Time.deltaTime);
             if (transform.position.Equals(waypoint1.transform.position))
             {
                 phase = MonsterPhase.Unaware;
+                monsterTimer2 = 0;
                 //maybe play annoyed sound
             }
 
+
+            if (monsterTimer2 > 30)
+            {
+                phase = MonsterPhase.Unaware;
+            }
         }
 
         if(phase==MonsterPhase.Scanning || phase == MonsterPhase.ScanAgain)
@@ -242,6 +259,7 @@ public class Monster : MonoBehaviour
             monsterTimer1 = 0;
             if(staticSource.volume>0)staticSource.volume -= .01f * Time.deltaTime;
             transform.position = origin.transform.position;
+           // Pinged(Vector3.zero);
         }
 
 
@@ -252,7 +270,16 @@ public class Monster : MonoBehaviour
     {
         phase = state;
     }
+    public void RoarFarLol()
+    {
+        roarAudioSourceFar.transform.position = originalFar;
+        roarAudioSourceFar.transform.position += new Vector3(Random.Range(-10, 10), Random.Range(-5, 5), Random.Range(-20, 0));
 
+
+        roarAudioSourceFar.PlayOneShot(roarAudioSourceFar.clip);
+        roarAudioSourceFar.transform.position = originalFar;
+
+    }
     public void Pinged(Vector3 pos)
     {
         if (Random.Range(0, 10) != 1)

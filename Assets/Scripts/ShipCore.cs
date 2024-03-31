@@ -23,6 +23,10 @@ public class ShipCore : MonoBehaviour
     [SerializeField] TextMeshProUGUI thingy;
     [SerializeField] TextMeshProUGUI fuelText;
 
+    [SerializeField] AudioSource hum;
+
+    private bool stuff = false;
+
 
     void Start()
     {
@@ -51,7 +55,7 @@ public class ShipCore : MonoBehaviour
         //isLoaded = true;
         if (isLoaded)
         {
-            fuelText.text = "Fuel: " + currentFuel;
+            fuelText.text = "Fuel: " + (int)currentFuel;
             var fuck = true;
 
             //DO NOT ROTATE THE SHIP WHEN PLAYER IS NOT PILOTING BTW
@@ -66,6 +70,15 @@ public class ShipCore : MonoBehaviour
 
                 velocity += new Vector3(0, 0, GameManager.instance.Player.GetPlayerInput().y * 10 * Time.deltaTime);
                 direction += new Vector3(0, GameManager.instance.Player.GetPlayerInput().x * 15 * Time.deltaTime, 0);
+
+                if (GameManager.instance.Player.GetPlayerInput().magnitude > 0)
+                {
+                    hum.volume=1;
+                }
+                else
+                {
+                    hum.volume=0;
+                }
 
                 if (velocity.magnitude > 10 && velocity.magnitude > previousVel.magnitude) velocity = previousVel;
                 if (direction.magnitude > 14 && direction.magnitude > previousDir.magnitude) direction = previousDir;
@@ -83,6 +96,7 @@ public class ShipCore : MonoBehaviour
 
             if (currentFuel < 0 && !shutdownSound)
             {
+                hum.volume = 0;
                 GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
                 shutdownSound = true;
             }

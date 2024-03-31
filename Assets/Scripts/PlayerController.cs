@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using static GameManager;
 
 public class PlayerController : MonoBehaviour
@@ -32,6 +33,11 @@ public class PlayerController : MonoBehaviour
     private float clampPilotB = 50;
 
     private bool startBreathing = false;
+    private bool startFadeout = false;
+    private bool deathRoar = false;
+
+    [SerializeField] private Image fadeout;
+    private float fadeAlpha;
 
     private float fuckyou = .1f;
     private float fuckup = 0;
@@ -42,12 +48,27 @@ public class PlayerController : MonoBehaviour
         Look.Enable();
         Move.Enable();
         characterController = GetComponent<CharacterController>();
+        fadeout.material.color = new Color(fadeout.material.color.r, fadeout.material.color.g, fadeout.material.color.b, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (startFadeout)
+        {
+            fadeAlpha += Time.deltaTime / 10;
+            fadeout.material.color = new Color(fadeout.material.color.r, fadeout.material.color.g, fadeout.material.color.b, fadeAlpha);
 
+            if(fadeAlpha >.3f && !deathRoar)
+            {
+                deathRoar = true;
+                GameManager.instance.monster.RoarFarLol();
+            }
+            if (fadeAlpha > 1)
+            {
+                GameManager.instance.LoadKillScene("Don't run out of power.");
+            }
+        }
         fuckup += Time.deltaTime;
         if (fuckup < fuckyou)
         {
@@ -161,7 +182,7 @@ public class PlayerController : MonoBehaviour
             startBreathing = true;
             GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
             Debug.Log("breathe");
-
+            startFadeout = true;
 
         }
     }

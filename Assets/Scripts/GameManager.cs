@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     public SpaceFieldGeneration planetGenerator;
     public ShipCore ShipCore;
     public DelieveryManager delievery;
+    public Monster monster;
 
     public static GameManager instance;
 
@@ -76,9 +78,16 @@ public class GameManager : MonoBehaviour
             death2 += Time.deltaTime;
             if (death2 > death1)
             {
+                LoadKillScene("Stay in the dark.");
                 //load kill scene
             }
             }
+
+    }
+
+    public void LoadKillScene(string v)
+    {
+        SceneManager.LoadScene("DeathScene");
 
     }
 
@@ -97,6 +106,11 @@ public class GameManager : MonoBehaviour
             //idk. kill
         }
         
+    }
+
+    public void Ping()
+    {
+        //got called
     }
 }
 

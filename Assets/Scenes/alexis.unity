@@ -187,6 +187,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 422676277}
     - target: {fileID: 7330017020071213235, guid: 08a2c2251835023488bdc305f6e5281b, type: 3}
+      propertyPath: monster
+      value: 
+      objectReference: {fileID: 216037726}
+    - target: {fileID: 7330017020071213235, guid: 08a2c2251835023488bdc305f6e5281b, type: 3}
       propertyPath: ShipCore
       value: 
       objectReference: {fileID: 34876841}
@@ -211,6 +215,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08a2c2251835023488bdc305f6e5281b, type: 3}
+--- !u!114 &216037726 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4678684934728686463, guid: 7df510951dbd1b948a435c8ceb48b32d, type: 3}
+  m_PrefabInstance: {fileID: 4090422960438245020}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df669ccf03a794342a22b2a4a8020f09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &275991827 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 178667531969939315, guid: 272822dcdbacb3045aa7983416101661, type: 3}
+  m_PrefabInstance: {fileID: 598180537}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &302681185 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6179906137259015271, guid: 272822dcdbacb3045aa7983416101661, type: 3}
@@ -230,6 +256,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1512655815987569298, guid: fa85585cb44ad8949ae3f54adf0e8946, type: 3}
+      propertyPath: range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492905741791223937, guid: fa85585cb44ad8949ae3f54adf0e8946, type: 3}
+      propertyPath: fadeout
+      value: 
+      objectReference: {fileID: 275991827}
     - target: {fileID: 4404274078302670452, guid: fa85585cb44ad8949ae3f54adf0e8946, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.057
