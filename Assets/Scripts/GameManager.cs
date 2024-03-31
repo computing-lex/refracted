@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         if (state == GameState.Kill)
         {
             breathingTimer += Time.deltaTime;
-            Debug.Log(breathingTimer);
+            //Debug.Log(breathingTimer);
             if (breathingTimer > 20)
             {
                 instance.Player.PlayBreathing();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,6 @@ public class PlayerController : MonoBehaviour
 
     private PlayerState playerState;
     private CharacterController characterController;
-    public Transform playerSpawnPoint;
     [SerializeField] private Camera cam;
 
     [SerializeField] private float _xRot = 0f;
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _ySens = .01f;
 
     [SerializeField] private float movementSpeed = 1.5f;
-private bool isLoaded = false;
+
 
     private float clampNormal = 80f;
 
@@ -32,65 +32,64 @@ private bool isLoaded = false;
     private float clampPilotB = 50;
 
     private bool startBreathing = false;
+
+    private float fuckyou = .1f;
+    private float fuckup = 0;
     void Start()
     {
-        isLoaded = false;
-        StartCoroutine(WaitForPlanets());
-    }
-
-    IEnumerator WaitForPlanets()
-    {
-        Debug.Log("Waiting for planet generation");
-        yield return new WaitUntil(() => instance.planetGenerator.generationComplete);
-
-        transform.position = playerSpawnPoint.position;
         Cursor.lockState = CursorLockMode.Locked;
         Look.Enable();
         Move.Enable();
         characterController = GetComponent<CharacterController>();
-        isLoaded = true;
-        Debug.Log("Loading complete!");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isLoaded)
+
+        fuckup += Time.deltaTime;
+        if (fuckup < fuckyou)
         {
-            if (playerState == PlayerState.Walking)
-            {
+            characterController.enabled = false;
+            transform.position= new Vector3(GameManager.instance.ShipCore.transform.position.x,1f, GameManager.instance.ShipCore.transform.position.z+7);
+            characterController.enabled = true;
+        }
 
-                //Debug.Log(Move.ReadValue<Vector2>());
-                Vector3 _transformedPlayerInput = transform.TransformDirection(new Vector3(Move.ReadValue<Vector2>().x, 0, Move.ReadValue<Vector2>().y));
+        if (Vector3.Distance(transform.position, GameManager.instance.ShipCore.transform.position) > 100)
+        {
+            MoveTo(GameManager.instance.ShipCore.transform.position);
+        }
 
-                Vector3 vel = new Vector3(_transformedPlayerInput.x, 0, _transformedPlayerInput.z);
+        if (playerState == PlayerState.Walking)
+        {
 
-                characterController.Move(movementSpeed * vel * Time.deltaTime);
-            }
-            else if (playerState == PlayerState.Piloting)
-            {
-                characterController.enabled = false;
-                transform.position = new Vector3(GameManager.instance.SteeringWheel.GetStandingPos().x, GameManager.instance.SteeringWheel.GetStandingPos().y, GameManager.instance.SteeringWheel.GetStandingPos().z);
-                characterController.enabled = true;
-                //transform.LookAt(GameManager.instance.SteeringWheel.transform.position);
-                //do the controller shit
-            }
+            //Debug.Log(Move.ReadValue<Vector2>());
+            Vector3 _transformedPlayerInput = transform.TransformDirection(new Vector3(Move.ReadValue<Vector2>().x, 0, Move.ReadValue<Vector2>().y));
+
+            Vector3 vel = new Vector3(_transformedPlayerInput.x, 0, _transformedPlayerInput.z);
+
+            characterController.Move((movementSpeed * vel) * Time.deltaTime);
+        }
+        else if (playerState == PlayerState.Piloting)
+        {
+            characterController.enabled = false;
+            transform.position = new Vector3(GameManager.instance.SteeringWheel.GetStandingPos().x, GameManager.instance.SteeringWheel.GetStandingPos().y, GameManager.instance.SteeringWheel.GetStandingPos().z);
+            characterController.enabled = true;
+            //transform.LookAt(GameManager.instance.SteeringWheel.transform.position);
+            //do the controller shit
         }
 
     }
 
     private void LateUpdate()
     {
-        if (isLoaded)
-        {
-            float mouseX = Look.ReadValue<Vector2>().x;
-            float mouseY = Look.ReadValue<Vector2>().y;
+        float mouseX = Look.ReadValue<Vector2>().x;
+        float mouseY = Look.ReadValue<Vector2>().y;
 
-            _xRot -= (mouseY) * _ySens;
-            _xRot = Mathf.Clamp(_xRot, -clampA, clampB);
-            cam.transform.localRotation = Quaternion.Euler(_xRot, 0, 0);
-            transform.Rotate(Vector3.up * (mouseX) * _xSens);
-        }
+        _xRot -= (mouseY) * _ySens;
+        _xRot = Mathf.Clamp(_xRot, -clampA, clampB);
+        cam.transform.localRotation = Quaternion.Euler(_xRot, 0, 0);
+        transform.Rotate(Vector3.up * (mouseX) * _xSens);
     }
 
     public void SetState(GameManager.PlayerState state)
@@ -149,5 +148,15 @@ private bool isLoaded = false;
 
 
         }
+    }
+
+    public void MoveTo(Vector3 newPosition)
+    {
+        characterController.enabled = false;
+      // transform.position = newPosition;
+        transform.position = new Vector3(newPosition.x, 0.83f, newPosition.z);
+        transform.position += new Vector3(0, 0, 7);
+        //do not
+        characterController.enabled = true;
     }
 }

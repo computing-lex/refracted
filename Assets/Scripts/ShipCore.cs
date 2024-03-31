@@ -39,7 +39,9 @@ public class ShipCore : MonoBehaviour
         Vector3 newPosition = GameManager.instance.planetGenerator.planets[Random.Range(0, GameManager.instance.planetGenerator.planets.Count)].transform.position;
         newPosition += spawnOffset;
 
-        transform.position = newPosition;
+        transform.position = new Vector3(newPosition.x,transform.position.y,newPosition.z);
+
+        GameManager.instance.Player.MoveTo(newPosition);
         isLoaded = true;
     }
 
