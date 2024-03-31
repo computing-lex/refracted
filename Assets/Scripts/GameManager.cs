@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     public PlayerController Player;
     public ShipController SteeringWheel;
+    public ShipCore ShipCore;
 
     public static GameManager instance;
     public enum PlayerState
