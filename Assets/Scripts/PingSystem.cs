@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PingSystem : MonoBehaviour
 {
-    
+
+
+    private float initalScale;
+    private float finalScale = 220f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,5 +19,10 @@ public class PingSystem : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public Transform Ping() {
+        
+        return transform;
     }
 }

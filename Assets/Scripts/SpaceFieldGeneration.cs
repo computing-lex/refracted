@@ -87,7 +87,12 @@ public class SpaceFieldGeneration : MonoBehaviour
                         InitializePlanet(newPlanetoid);
                         foreach (var planetPosition in newPlanetoid.GetComponentsInChildren<Transform>())
                         {
-                            planetPosition.position = new Vector3(0, 0, 0);
+                            if(planetPosition.gameObject.name != "planetIcon") {
+                                planetPosition.position = new Vector3(0, 0, 0);
+                            } else {
+                                planetPosition.position = new Vector3(0,20,0);
+                            }
+                            
                         }
 
                         newPlanetoid.transform.position = position;
@@ -133,7 +138,7 @@ public class SpaceFieldGeneration : MonoBehaviour
         Destroy(planets[planets.IndexOf(toFind)]);
         planets.RemoveAt(planets.IndexOf(toFind));
     }
-    
+
     private void DestroyPlanets()
     {
         for (int i = 0; i < planets.Count; i++)
