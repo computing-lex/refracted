@@ -48,6 +48,7 @@ public class ShipCore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //isLoaded = true;
         if (isLoaded)
         {
             fuelText.text = "Fuel: " + currentFuel;
@@ -56,10 +57,10 @@ public class ShipCore : MonoBehaviour
             //DO NOT ROTATE THE SHIP WHEN PLAYER IS NOT PILOTING BTW
 
 
+            //Debug.Log(GameManager.instance.Player.GetState() +", " +GameManager.PlayerState.Piloting+", " + currentFuel);
 
             if (GameManager.instance.Player.GetState() == GameManager.PlayerState.Piloting && currentFuel > 0)
             {
-
                 var previousVel = velocity;
                 var previousDir = direction;
 
@@ -70,6 +71,11 @@ public class ShipCore : MonoBehaviour
                 if (direction.magnitude > 14 && direction.magnitude > previousDir.magnitude) direction = previousDir;
 
                 currentFuel -= GameManager.instance.Player.GetPlayerInput().magnitude * Time.deltaTime * 5;
+
+                //Debug.Log(GameManager.instance.Player.GetPlayerInput());
+
+                //Debug.Log(velocity);
+
 
                 if (velocity.magnitude < 0.1f) velocity = Vector3.zero;
 

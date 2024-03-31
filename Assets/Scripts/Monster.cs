@@ -16,6 +16,12 @@ public class Monster : MonoBehaviour
 
     [SerializeField] private Transform[] waypoints;
 
+
+
+    Vector3 originalFar = new Vector3(-3.11f, 3.12f, -75);
+    Vector3 originalNear = new Vector3(2.63f, 3.12f, -10);
+
+
     [SerializeField] AudioSource roarAudioSourceFar;
     [SerializeField] AudioSource roarAudioSourceNear;
 
@@ -74,6 +80,11 @@ public class Monster : MonoBehaviour
             monsterTimer1 += Time.deltaTime;
             if (monsterTimer1 > monsterTimestamp)
             {
+
+                roarAudioSourceFar.transform.position = originalFar;
+                roarAudioSourceFar.transform.position += new Vector3(Random.Range(-10, 10), Random.Range(-5, 5), Random.Range(-20, 0));
+
+
                 roarAudioSourceFar.PlayOneShot(roarAudioSourceFar.clip);
                 phase = MonsterPhase.Aware;
                 monsterTimer1 = 0;
@@ -96,6 +107,12 @@ public class Monster : MonoBehaviour
                 }
                 else
                 {
+
+                    roarAudioSourceNear.transform.position = originalNear;
+                    roarAudioSourceNear.transform.position += new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), Random.Range(0,10));
+
+
+
                     roarAudioSourceNear.PlayOneShot(roarAudioSourceNear.clip);
                     phase = MonsterPhase.Approaching;
                     monsterTimer1 = 0;

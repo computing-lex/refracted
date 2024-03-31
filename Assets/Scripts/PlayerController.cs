@@ -72,8 +72,8 @@ public class PlayerController : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            Look.Enable();
-            Move.Enable();
+            //Look.Enable();
+            //Move.Enable();
         }
         else if (playerState == PlayerState.Piloting)
         {
@@ -85,15 +85,15 @@ public class PlayerController : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            Look.Enable();
-            Move.Disable();
+            //Look.Enable();
+            //Move.Disable();
         }
         else if (playerState == PlayerState.Extra)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            Look.Disable();
-            Move.Disable();
+            //Look.Disable();
+            //Move.Disable();
         }
     }
 
