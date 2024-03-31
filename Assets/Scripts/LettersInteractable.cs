@@ -28,7 +28,9 @@ public class LettersInteractable : MonoBehaviour, IInteractable
             LettersUIRoot.SetActive(true);
             string content = GameManager.instance.delievery.currentDelivery.contents;
             string dest = "(" + GameManager.instance.delievery.currentDelivery.destinationX.ToString() + ", " + GameManager.instance.delievery.currentDelivery.destinationY.ToString() + ")\n";
-            MessageTMP.text = "Destination: " + dest + "\n" + content;
+            string finalText = "Destination: " + dest + "\n" + content;
+            MessageTMP.text = finalText;
+            Debug.Log(finalText);
         }
         else
         {
