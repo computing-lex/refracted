@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class DeliveryCheck : MonoBehaviour
 {
     private bool recievedPackage = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +26,9 @@ public class DeliveryCheck : MonoBehaviour
         {
             if (GameManager.instance.delievery.currentDelivery == null)
             {
+                Debug.Log("Package recieved");
                 recievedPackage = true;
-                GameManager.instance.delievery.GeneratePackage(other.GameObject());
+                GameManager.instance.delievery.GeneratePackage(GameManager.instance.planetGenerator.RandomPlanet());
             }
 
         }

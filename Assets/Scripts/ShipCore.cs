@@ -16,7 +16,7 @@ public class ShipCore : MonoBehaviour
     // Fuel Values
     public float maxFuel = 1000;
     public float currentFuel;
-
+    private bool recievedPackage = false;
     // UI
     private bool shutdownSound = false;
 
@@ -24,13 +24,15 @@ public class ShipCore : MonoBehaviour
     [SerializeField] TextMeshProUGUI thingy;
     [SerializeField] TextMeshProUGUI fuelText;
 
+    public TMP_Text location;
+
     [SerializeField] AudioSource hum;
     [SerializeField] AudioSource losingit;
 
 
     public bool inOrbit = false;
 
-    private float orbitTimer=0;
+    private float orbitTimer = 0;
     private float orbitEvilTime;
 
 
@@ -52,7 +54,7 @@ public class ShipCore : MonoBehaviour
         Vector3 newPosition = GameManager.instance.planetGenerator.planets[Random.Range(0, GameManager.instance.planetGenerator.planets.Count)].transform.position;
         newPosition += spawnOffset;
 
-        transform.position = new Vector3(newPosition.x,transform.position.y,newPosition.z);
+        transform.position = new Vector3(newPosition.x, transform.position.y, newPosition.z);
 
         GameManager.instance.Player.MoveTo(newPosition);
         isLoaded = true;
@@ -64,18 +66,18 @@ public class ShipCore : MonoBehaviour
         //isLoaded = true;
         if (isLoaded)
         {
-            if (inOrbit && currentFuel>0)
+            if (inOrbit && currentFuel > 0)
             {
 
                 orbitTimer += Time.deltaTime;
-                if(orbitTimer> orbitEvilTime)
+                if (orbitTimer > orbitEvilTime)
                 {
                     GameManager.instance.monster.Pinged(transform.position);
                 }
                 if (currentFuel < (maxFuel / 2) + 100 && velocity.magnitude < 1)
                 {
                     currentFuel += Time.deltaTime * 10f;
-                    
+
                 }
             }
 
@@ -99,11 +101,11 @@ public class ShipCore : MonoBehaviour
 
                 if (GameManager.instance.Player.GetPlayerInput().magnitude > 0)
                 {
-                    hum.volume=1;
+                    hum.volume = 1;
                 }
                 else
                 {
-                    hum.volume=0;
+                    hum.volume = 0;
                 }
 
                 if (velocity.magnitude > 20 && velocity.magnitude > previousVel.magnitude) velocity = previousVel;
@@ -158,18 +160,26 @@ public class ShipCore : MonoBehaviour
         {
             Debug.Log("Out Of Orbit!");
             inOrbit = false;
+            recievedPackage = false;
 
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        
+
         if (other.gameObject.GetComponent<IndividualOffset>() != null && isLoaded)
         {
             Debug.Log("In Orbit!");
             orbitEvilTime = Random.Range(20, 70);
             inOrbit = true;
+            location.text = GameManager.instance.planetGenerator.GetPlanetLoc(other.gameObject.GetComponent<Planet>());
             
+            if (GameManager.instance.delievery.hasPackage == false)
+            {
+                Debug.Log("Package recieved");
+                recievedPackage = true;
+                GameManager.instance.delievery.GeneratePackage(GameManager.instance.planetGenerator.RandomPlanet());
+            }
         }
     }
 }

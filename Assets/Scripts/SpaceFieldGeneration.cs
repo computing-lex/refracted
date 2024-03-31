@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Text.RegularExpressions;
+
 public class SpaceFieldGeneration : MonoBehaviour
 {
     [Range(0, 100)]
@@ -136,11 +138,23 @@ public class SpaceFieldGeneration : MonoBehaviour
             pm.SetTexture("_MainTex", rbase);
         }
     }
-    
-    public GameObject getPlanet()
+
+    public GameObject RandomPlanet()
     {
         int idx = Random.Range(0, planets.Count);
         return planets[idx];
+    }
+
+    public string GetPlanetLoc(Planet planet)
+    {
+        int x, y;
+
+        MatchCollection mc = Regex.Matches(planet.name, @"\b(\d+) (\d+)\b");
+        int.TryParse(mc[0].Groups[1].Value, out x);
+        int.TryParse(mc[0].Groups[2].Value, out y);
+
+        string output = "[" + x + ", " + y + "]";
+        return output;
     }
 
     public void DestroyPlanet(GameObject toFind)

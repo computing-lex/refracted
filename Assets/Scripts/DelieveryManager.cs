@@ -12,6 +12,7 @@ public class DelieveryManager : MonoBehaviour
     public TextAsset deliveryContents;
 
     [SerializeField] public Package currentDelivery;
+    public bool hasPackage = false;
     public int DeliveriesCompleted { get; private set; }
 
     // The delieveries that can be made, a list of packages
@@ -48,6 +49,7 @@ public class DelieveryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hasPackage = false;
         DeliveriesCompleted = 0;
         deliveryList = JsonUtility.FromJson<DeliveryList>(deliveryContents.text);
         Debug.Log("Packages parsed!");
@@ -63,6 +65,7 @@ public class DelieveryManager : MonoBehaviour
     {
         DeliveriesCompleted++;
         Debug.Log("Package Delivered!");
+        hasPackage = false;
         currentDelivery = new Package();
     }
 
@@ -74,6 +77,7 @@ public class DelieveryManager : MonoBehaviour
         int.TryParse(mc[0].Groups[1].Value, out currentDelivery.destinationX);
         int.TryParse(mc[0].Groups[2].Value, out currentDelivery.destinationY);
         currentDelivery.contents = del.contents;
+        hasPackage = true;
     }
 
     public Package GetPackage() {
