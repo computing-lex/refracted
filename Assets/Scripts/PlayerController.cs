@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private float clampPilotB = 50;
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Look.Enable();
         Move.Enable();
         characterController = GetComponent<CharacterController>();
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log(Move.ReadValue<Vector2>());
             Vector3 _transformedPlayerInput = transform.TransformDirection(new Vector3(Move.ReadValue<Vector2>().x, 0, Move.ReadValue<Vector2>().y));
 
-            Vector3 vel = new Vector3(_transformedPlayerInput.x, -.1f, _transformedPlayerInput.z);
+            Vector3 vel = new Vector3(_transformedPlayerInput.x, -1f, _transformedPlayerInput.z);
 
             characterController.Move(movementSpeed * vel * Time.deltaTime);
         }
@@ -97,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
     public void MoveWithShip(Vector3 move, Vector3 rotate)
     {
-        characterController.Move(new Vector3(move.x, 0, move.z));
+        characterController.Move(new Vector3(move.x, 0, move.z) );
         //cam.transform.localRotation = Quaternion.Euler(rotate.x, 0, 0);
         //if(playerState == PlayerState.Piloting)
         //{

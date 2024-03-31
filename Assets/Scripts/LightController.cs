@@ -104,8 +104,8 @@ public class LightController : MonoBehaviour
                 }
                 else if (GameManager.instance.ShipCore.currentFuel < 0)
                 {
-                    flickerHigh = 1.5f;
-                    flickerLow = 1;
+                    flickerHigh = .7f;
+                    flickerLow = .3f;
                     deathTimer -= Time.deltaTime;
                     
                 }

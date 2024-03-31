@@ -30,27 +30,36 @@ public class ShipCore : MonoBehaviour
 
         //DO NOT ROTATE THE SHIP WHEN PLAYER IS NOT PILOTING BTW
 
-        velocity = Vector3.MoveTowards(velocity, Vector3.zero, Time.deltaTime * 1);
-        direction = Vector3.MoveTowards(direction, Vector3.zero, Time.deltaTime * 10);
+
 
         if (GameManager.instance.Player.GetState() == GameManager.PlayerState.Piloting)
         {
-            Vector3 prevVel = velocity;
-            velocity += transform.TransformDirection(new Vector3(0, 0, GameManager.instance.Player.GetPlayerInput().y)) / 10;
 
-            currentFuel -= GameManager.instance.Player.GetPlayerInput().magnitude / 10;
+            var previousVel = velocity;
+            var previousDir = direction;
 
-            if (velocity.magnitude > 10 && velocity.magnitude > prevVel.magnitude) velocity = prevVel;
-            direction += transform.TransformDirection(new Vector3(0, GameManager.instance.Player.GetPlayerInput().x, 0)) / 5;
+            velocity += new Vector3(0, 0, GameManager.instance.Player.GetPlayerInput().y * 10 * Time.deltaTime);
+            direction += new Vector3(0, GameManager.instance.Player.GetPlayerInput().x * 15 * Time.deltaTime, 0);
+
+            if (velocity.magnitude > 12 && velocity.magnitude > previousVel.magnitude) velocity = previousVel;
+            if (direction.magnitude > 14 && direction.magnitude > previousDir.magnitude) direction = previousDir;
+
+
+            if (velocity.magnitude < 0.1f) velocity = Vector3.zero;
 
         }
 
+
         Debug.DrawRay(transform.position + new Vector3(0, 1, 0), velocity, Color.blue);
 
-        transform.position += velocity * Time.deltaTime;
-        transform.Rotate(direction * Time.deltaTime, Space.Self);
 
-        GameManager.instance.Player.MoveWithShip(velocity * Time.deltaTime, direction * Time.deltaTime);
+        //velocity = Vector3.MoveTowards(velocity, Vector3.zero, Time.deltaTime * 2);
+        direction = Vector3.MoveTowards(direction, Vector3.zero, Time.deltaTime * 6);
+
+        transform.position += transform.TransformDirection(velocity) * Time.deltaTime; //transform.TransformDirection(velocity * Time.deltaTime);
+        transform.Rotate((direction) * Time.deltaTime, Space.Self);
+
+        GameManager.instance.Player.MoveWithShip(transform.TransformDirection(velocity)*Time.deltaTime, direction*Time.deltaTime);
 
         //Vector3 movementThisFrame = new Vector3(0, 0, 1);
         //Vector3 rotationThisFrame = new Vector3(0, 5, 0);
