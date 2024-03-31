@@ -854,6 +854,7 @@ MonoBehaviour:
   fuelText: {fileID: 0}
   hum: {fileID: 8561874722481997277}
   losingit: {fileID: 314972209355594333}
+  inOrbit: 0
 --- !u!82 &8613229041473426295
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2744,12 +2745,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 3717028876014660585}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
       propertyPath: m_LocalScale.y
-      value: 187.37512
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
       propertyPath: m_LocalScale.z
-      value: 21.977686
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2757,27 +2762,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.6267182
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.3088604
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000030908623
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000030908623
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2840,7 +2845,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 6939290099271591603, guid: 15d3ae81c118a364293f32faa15c9dbc, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: 73705939081cdea4ea598cb73f810b2d, type: 3}
 --- !u!114 &3555261898525441929
 MonoBehaviour:
   m_ObjectHideFlags: 0
