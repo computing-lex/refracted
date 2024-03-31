@@ -10,6 +10,8 @@ public class Monster : MonoBehaviour
     //[SerializeField] private Transform endPos;
 
     [SerializeField] private Light light;
+    private float lightMax = 200;
+    private float lightCurrent;
     [SerializeField] private GameObject cone;
 
     [SerializeField] private float scanBackChance;
@@ -59,6 +61,7 @@ public class Monster : MonoBehaviour
         StartScan,
         Scanning,
         ScanAgain,
+        FadeOut,
         Kill,
         Leaving
     }
@@ -68,7 +71,8 @@ public class Monster : MonoBehaviour
     {
         staticSource = GetComponent<AudioSource>();
         staticSource.volume = 0f;
-        //Pinged(Vector3.zero);
+        //phase = MonsterPhase.StartScan;
+
     }
 
     // Update is called once per frame
@@ -127,7 +131,7 @@ public class Monster : MonoBehaviour
 
         if(phase == MonsterPhase.Approaching)
         {
-            Debug.Log(Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position));
+            //Debug.Log(Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position));
             monsterTimer1 += Time.deltaTime;
             if(monsterTimer1 > monsterTimestamp)
             {
@@ -175,6 +179,8 @@ public class Monster : MonoBehaviour
 
         if (phase == MonsterPhase.StartScan)
         {
+            lightCurrent = 0;
+            light.intensity = lightCurrent;
             transform.LookAt(GameManager.instance.Player.transform.position);
             transform.position = waypoint1.transform.position;
             phase = MonsterPhase.Scanning;
@@ -182,6 +188,8 @@ public class Monster : MonoBehaviour
 
         if(phase== MonsterPhase.Scanning)
         {
+
+
             monsterTimer2 += Time.deltaTime;
             transform.LookAt(GameManager.instance.Player.transform.position);
             transform.position=Vector3.MoveTowards(transform.position,waypoint2.transform.position,20f*Time.deltaTime);
@@ -194,13 +202,13 @@ public class Monster : MonoBehaviour
                 }
                 else
                 {
-                    phase = MonsterPhase.Unaware;
+                    phase = MonsterPhase.FadeOut;
                 }
             }
 
             if (monsterTimer2 > 30)
             {
-                phase = MonsterPhase.Unaware;
+                phase = MonsterPhase.FadeOut;
             }
 
         }
@@ -213,7 +221,7 @@ public class Monster : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, waypoint1.transform.position, 15f * Time.deltaTime);
             if (transform.position.Equals(waypoint1.transform.position))
             {
-                phase = MonsterPhase.Unaware;
+                phase = MonsterPhase.FadeOut;
                 monsterTimer2 = 0;
                 //maybe play annoyed sound
             }
@@ -221,19 +229,36 @@ public class Monster : MonoBehaviour
 
             if (monsterTimer2 > 30)
             {
-                phase = MonsterPhase.Unaware;
+                phase = MonsterPhase.FadeOut;
             }
         }
 
-        if(phase==MonsterPhase.Scanning || phase == MonsterPhase.ScanAgain)
+        Debug.Log(killZone.ISBROHERE);
+
+        if(phase == MonsterPhase.FadeOut)
         {
+            lightCurrent -= Time.deltaTime * 50;
+            light.intensity = lightCurrent;
+            if (lightCurrent < 0) phase = MonsterPhase.Unaware;
+        }
+
+        if (phase==MonsterPhase.Scanning || phase == MonsterPhase.ScanAgain)
+        {
+            if (lightCurrent < lightMax)
+            {
+                lightCurrent += Time.deltaTime * 10;
+            }
+           
+
+            light.intensity = lightCurrent;
+
             //Debug.Log("Scanning, blud is here: "+ killZone.ISBROHERE);
             if (killZone.ISBROHERE && !bludIsDead)
             {
                // Debug.Log("Dumbass Down");
                 bludIsDead = true;
                 monsterTimer2 = 0;
-                monsterTimestamp = Random.Range(1, 3);
+                monsterTimestamp = Random.Range(.1f, 1);
 
 
             }
@@ -259,7 +284,9 @@ public class Monster : MonoBehaviour
             monsterTimer1 = 0;
             if(staticSource.volume>0)staticSource.volume -= .01f * Time.deltaTime;
             transform.position = origin.transform.position;
-           // Pinged(Vector3.zero);
+            //Pinged(Vector3.zero);
+
+            // Pinged(Vector3.zero);
         }
 
 
