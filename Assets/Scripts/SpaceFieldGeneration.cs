@@ -10,6 +10,7 @@ public class SpaceFieldGeneration : MonoBehaviour
     [SerializeField] private GameObject planetParent;
     [SerializeField] private Vector3 maxShift;
     public bool regenMap = false;
+    public bool generationComplete = false;
     [SerializeField] private int planetSpacing = 10;
 
     // Map generation parameters 
@@ -27,7 +28,7 @@ public class SpaceFieldGeneration : MonoBehaviour
     {
         map = new int[width, height];
 
-        GenerateMap();
+        StartCoroutine(GenerateMap());
 
     }
 
@@ -36,7 +37,7 @@ public class SpaceFieldGeneration : MonoBehaviour
         if (regenMap)
         {
             DestroyPlanets();
-            GenerateMap();
+            StartCoroutine(GenerateMap());
             regenMap = false;
         }
     }
@@ -60,7 +61,7 @@ public class SpaceFieldGeneration : MonoBehaviour
         }
     }
 
-    private void GenerateMap()
+    IEnumerator GenerateMap()
     {
         RandomFillMap();
 
@@ -96,6 +97,10 @@ public class SpaceFieldGeneration : MonoBehaviour
                 }
             }
         }
+
+        generationComplete = true;
+
+        yield return null;
     }
 
     private void InitializePlanet(GameObject newPlanetoid)
@@ -105,7 +110,7 @@ public class SpaceFieldGeneration : MonoBehaviour
         planetComponent.shapeSettings = shapeSettings;
         planetComponent.GeneratePlanet();
         RandomizeMaterial(newPlanetoid);
-        Debug.Log("Planet generated at " + newPlanetoid.transform.position.ToString());
+        //Debug.Log("Planet generated at " + newPlanetoid.transform.position.ToString());
     }
 
     private void RandomizeMaterial(GameObject newPlanetoid)

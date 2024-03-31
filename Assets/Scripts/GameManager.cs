@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     public PlayerController Player;
     public ShipController SteeringWheel;
+    public SpaceFieldGeneration planetGenerator;
     public ShipCore ShipCore;
     public DelieveryManager delievery;
 
@@ -37,6 +38,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         instance = this;
+    }
+    public IEnumerator LoadPlanets() {
+        Debug.Log("Loading planets!");
+        yield return new WaitUntil(() => GameManager.instance.planetGenerator.generationComplete);
     }
 
     // Update is called once per frame

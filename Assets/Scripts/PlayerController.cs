@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _ySens = .01f;
 
     [SerializeField] private float movementSpeed = 1.5f;
-
+private bool isLoaded = false;
 
     private float clampNormal = 80f;
 
@@ -34,48 +34,63 @@ public class PlayerController : MonoBehaviour
     private bool startBreathing = false;
     void Start()
     {
+        isLoaded = false;
+        StartCoroutine(WaitForPlanets());
+    }
+
+    IEnumerator WaitForPlanets()
+    {
+        Debug.Log("Waiting for planet generation");
+        yield return new WaitUntil(() => instance.planetGenerator.generationComplete);
+
         transform.position = playerSpawnPoint.position;
         Cursor.lockState = CursorLockMode.Locked;
         Look.Enable();
         Move.Enable();
         characterController = GetComponent<CharacterController>();
+        isLoaded = true;
+        Debug.Log("Loading complete!");
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-        if (playerState == PlayerState.Walking)
+        if (isLoaded)
         {
+            if (playerState == PlayerState.Walking)
+            {
 
-            //Debug.Log(Move.ReadValue<Vector2>());
-            Vector3 _transformedPlayerInput = transform.TransformDirection(new Vector3(Move.ReadValue<Vector2>().x, 0, Move.ReadValue<Vector2>().y));
+                //Debug.Log(Move.ReadValue<Vector2>());
+                Vector3 _transformedPlayerInput = transform.TransformDirection(new Vector3(Move.ReadValue<Vector2>().x, 0, Move.ReadValue<Vector2>().y));
 
-            Vector3 vel = new Vector3(_transformedPlayerInput.x, 0, _transformedPlayerInput.z);
+                Vector3 vel = new Vector3(_transformedPlayerInput.x, 0, _transformedPlayerInput.z);
 
-            characterController.Move(movementSpeed * vel * Time.deltaTime);
+                characterController.Move(movementSpeed * vel * Time.deltaTime);
+            }
+            else if (playerState == PlayerState.Piloting)
+            {
+                characterController.enabled = false;
+                transform.position = new Vector3(GameManager.instance.SteeringWheel.GetStandingPos().x, GameManager.instance.SteeringWheel.GetStandingPos().y, GameManager.instance.SteeringWheel.GetStandingPos().z);
+                characterController.enabled = true;
+                //transform.LookAt(GameManager.instance.SteeringWheel.transform.position);
+                //do the controller shit
+            }
         }
-        else if (playerState == PlayerState.Piloting)
-        {
-            characterController.enabled = false;
-            transform.position = new Vector3(GameManager.instance.SteeringWheel.GetStandingPos().x, GameManager.instance.SteeringWheel.GetStandingPos().y, GameManager.instance.SteeringWheel.GetStandingPos().z);
-            characterController.enabled = true;
-            //transform.LookAt(GameManager.instance.SteeringWheel.transform.position);
-            //do the controller shit
-        }
-       
+
     }
 
     private void LateUpdate()
     {
-        float mouseX = Look.ReadValue<Vector2>().x;
-        float mouseY = Look.ReadValue<Vector2>().y;
+        if (isLoaded)
+        {
+            float mouseX = Look.ReadValue<Vector2>().x;
+            float mouseY = Look.ReadValue<Vector2>().y;
 
-        _xRot -= (mouseY) * _ySens;
-        _xRot = Mathf.Clamp(_xRot, -clampA, clampB);
-        cam.transform.localRotation = Quaternion.Euler(_xRot, 0, 0);
-        transform.Rotate(Vector3.up * (mouseX) * _xSens);
+            _xRot -= (mouseY) * _ySens;
+            _xRot = Mathf.Clamp(_xRot, -clampA, clampB);
+            cam.transform.localRotation = Quaternion.Euler(_xRot, 0, 0);
+            transform.Rotate(Vector3.up * (mouseX) * _xSens);
+        }
     }
 
     public void SetState(GameManager.PlayerState state)
@@ -106,14 +121,14 @@ public class PlayerController : MonoBehaviour
     public void MoveWithShip(Vector3 move, Vector3 rotate)
     {
         characterController.enabled = false;
-        transform.position+=(new Vector3(move.x, 0, move.z) );
-        transform.position = new Vector3(transform.position.x, 0.083f,transform.position.z);
+        transform.position += (new Vector3(move.x, 0, move.z));
+        transform.position = new Vector3(transform.position.x, 0.083f, transform.position.z);
         //cam.transform.localRotation = Quaternion.Euler(rotate.x, 0, 0);
         //if(playerState == PlayerState.Piloting)
         //{
         transform.Rotate(rotate);
 
-        
+
         characterController.enabled = true;
         //}
 
@@ -126,12 +141,13 @@ public class PlayerController : MonoBehaviour
 
     public void PlayBreathing()
     {
-        if (!startBreathing) {
+        if (!startBreathing)
+        {
             startBreathing = true;
-        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
-        Debug.Log("breathe");
+            GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
+            Debug.Log("breathe");
 
 
-         }
+        }
     }
 }

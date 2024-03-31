@@ -194,6 +194,10 @@ PrefabInstance:
       propertyPath: SteeringWheel
       value: 
       objectReference: {fileID: 1493017841}
+    - target: {fileID: 7330017020071213235, guid: 08a2c2251835023488bdc305f6e5281b, type: 3}
+      propertyPath: planetGenerator
+      value: 
+      objectReference: {fileID: 2116435599}
     - target: {fileID: 8923899422901093572, guid: 08a2c2251835023488bdc305f6e5281b, type: 3}
       propertyPath: m_Name
       value: GameManager
