@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
 
     private float clampPilotA = 0;
     private float clampPilotB = 50;
+
+    private bool startBreathing = false;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -110,5 +112,16 @@ public class PlayerController : MonoBehaviour
     public Vector2 GetPlayerInput()
     {
         return Move.ReadValue<Vector2>();
+    }
+
+    public void PlayBreathing()
+    {
+        if (!startBreathing) {
+            startBreathing = true;
+        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
+        Debug.Log("breathe");
+
+
+         }
     }
 }

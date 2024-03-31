@@ -16,10 +16,13 @@ public class ShipCore : MonoBehaviour
 
     // UI
     public TextMeshProUGUI fuelText;
+    private bool shutdownSound = false;
+
+    [SerializeField] AudioClip breathing;
 
     void Start()
     {
-        currentFuel = Random.Range(0.5f, 0.6f) * 1000; //start with 500-600 fuel
+        currentFuel = Random.Range(0.5f, 0.6f) * maxFuel; //start with 500-600 fuel
     }
 
     // Update is called once per frame
@@ -32,7 +35,7 @@ public class ShipCore : MonoBehaviour
 
 
 
-        if (GameManager.instance.Player.GetState() == GameManager.PlayerState.Piloting)
+        if (GameManager.instance.Player.GetState() == GameManager.PlayerState.Piloting && currentFuel > 0)
         {
 
             var previousVel = velocity;
@@ -43,10 +46,17 @@ public class ShipCore : MonoBehaviour
 
             if (velocity.magnitude > 12 && velocity.magnitude > previousVel.magnitude) velocity = previousVel;
             if (direction.magnitude > 14 && direction.magnitude > previousDir.magnitude) direction = previousDir;
-
+            
+            currentFuel -= GameManager.instance.Player.GetPlayerInput().magnitude * Time.deltaTime * 10;
 
             if (velocity.magnitude < 0.1f) velocity = Vector3.zero;
 
+        }
+
+        if(currentFuel<0 && !shutdownSound)
+        {
+            GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
+            shutdownSound = true;
         }
 
 
@@ -68,5 +78,5 @@ public class ShipCore : MonoBehaviour
 
     }
 
-
+    
 }
