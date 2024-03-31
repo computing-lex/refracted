@@ -64,4 +64,9 @@ public class DelieveryManager : MonoBehaviour
     {
 
     }
+
+    public Package GetPackage() {
+        
+        return currentDelivery;
+    }
 }

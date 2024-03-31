@@ -19,8 +19,8 @@ public class SpaceFieldGeneration : MonoBehaviour
     public Vector3 planetScale;
     [SerializeField] private int[,] map;
 
-    [SerializeField] public Material PlanetMaterial;
-    [SerializeField] public ShapeSettings shapeSettings;
+    public Material PlanetMaterial;
+    public ShapeSettings shapeSettings;
     public List<GameObject> planets = new List<GameObject>();
 
     // Generates new planet array randomly
@@ -87,7 +87,7 @@ public class SpaceFieldGeneration : MonoBehaviour
                         InitializePlanet(newPlanetoid);
                         foreach (var planetPosition in newPlanetoid.GetComponentsInChildren<Transform>())
                         {
-                            planetPosition.position = new Vector3(0,0,0);
+                            planetPosition.position = new Vector3(0, 0, 0);
                         }
 
                         newPlanetoid.transform.position = position;

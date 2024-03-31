@@ -69,7 +69,7 @@ public class ShipCore : MonoBehaviour
                 if (velocity.magnitude > 10 && velocity.magnitude > previousVel.magnitude) velocity = previousVel;
                 if (direction.magnitude > 14 && direction.magnitude > previousDir.magnitude) direction = previousDir;
 
-                currentFuel -= GameManager.instance.Player.GetPlayerInput().magnitude * Time.deltaTime * 10;
+                currentFuel -= GameManager.instance.Player.GetPlayerInput().magnitude * Time.deltaTime * 5;
 
                 if (velocity.magnitude < 0.1f) velocity = Vector3.zero;
 
