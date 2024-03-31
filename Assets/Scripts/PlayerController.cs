@@ -153,10 +153,18 @@ public class PlayerController : MonoBehaviour
     public void MoveTo(Vector3 newPosition)
     {
         characterController.enabled = false;
-      // transform.position = newPosition;
+        // transform.position = newPosition;
         transform.position = new Vector3(newPosition.x, 0.83f, newPosition.z);
         transform.position += new Vector3(0, 0, 7);
         //do not
         characterController.enabled = true;
+    }
+
+
+    [SerializeField] private AudioSource deathSound;
+    public void DoAJumpscare()
+    {
+        deathSound.PlayOneShot(deathSound.clip);
+        //make image fill canvas too
     }
 }

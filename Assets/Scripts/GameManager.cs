@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     private float breathingTimer;
     private float timeToDie = 60;
+
+    private bool jumpscareShit = false;
     public enum GameState
     {
         Intro,
@@ -61,6 +64,34 @@ public class GameManager : MonoBehaviour
                 instance.Player.PlayBreathing();
             }
         }
+        //TODO: add fadeout 
+
+        //TODO: SOS (just run do a jumpscare)
+
+        if (jumpscareShit) {
+            death2 += Time.deltaTime;
+            if (death2 > death1)
+            {
+                //load kill scene
+            }
+            }
+
+    }
+
+    private float death1;
+    private float death2;
+    public void KillDaPlayer(string v)
+    {
+        death1 = 1;
+        if (v.Equals("Jumpscare"))
+        {
+            jumpscareShit = true;
+            Player.DoAJumpscare();
+        }else if (v.Equals("MonsterSlow"))
+        {
+
+        }
+        
     }
 }
 

@@ -101,5 +101,8 @@ public class ShipCore : MonoBehaviour
 
     }
 
-
+    public Vector3 GetVelocity()
+    {
+        return velocity;
+    }
 }

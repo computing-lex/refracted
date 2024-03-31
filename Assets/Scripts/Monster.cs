@@ -15,6 +15,24 @@ public class Monster : MonoBehaviour
     [SerializeField] private float scanBackChance;
 
     [SerializeField] private Transform[] waypoints;
+
+    [SerializeField] AudioSource roarAudioSourceFar;
+    [SerializeField] AudioSource roarAudioSourceNear;
+
+    [SerializeField] GameObject waypoint1;
+    [SerializeField] GameObject waypoint2;
+
+    [SerializeField] GameObject origin;
+
+
+
+    [SerializeField] StupidFuckingKillzoneScript killZone;
+
+    private AudioSource staticSource;
+
+    private bool bludIsDead = false;
+
+
     private int currentWaypoint;
 
 
@@ -22,10 +40,14 @@ public class Monster : MonoBehaviour
     private float monsterTimer1;
     private float monsterTimer2;
 
+    private Vector3 locatedPos;
+
+
 
     public enum MonsterPhase
     {
         Unaware,
+        Pinged,
         Aware,
         Approaching,
         StartScan,
@@ -38,70 +60,168 @@ public class Monster : MonoBehaviour
     [SerializeField] private MonsterPhase phase;
     void Start()
     {
-        
+        staticSource = GetComponent<AudioSource>();
+        staticSource.volume = 0f;
+        Pinged(Vector3.zero);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-
-        if(phase == MonsterPhase.Aware)
+        if (phase == MonsterPhase.Pinged)
         {
             monsterTimer1 += Time.deltaTime;
-            if(monsterTimer1> monsterTimestamp)
+            if (monsterTimer1 > monsterTimestamp)
             {
-                phase = MonsterPhase.Approaching;
-                //play approaching roar
-                
+                roarAudioSourceFar.PlayOneShot(roarAudioSourceFar.clip);
+                phase = MonsterPhase.Aware;
+                monsterTimer1 = 0;
+                monsterTimestamp = Random.Range(10, 15);
             }
+
         }
 
-        //hi so
-        //i'm thinking there are a few ways for it to get you
-        //if you ping it and then sit still, you die
-        //you need to get away from the monster's range
-        //it waits a few seconds before roaring and approaching
-        //there's a 10% chance your ping won't affect it which just confuses you further
-        //want a lot of random chance involved here
+        if (phase == MonsterPhase.Aware)
+        {
+            monsterTimer1 += Time.deltaTime;
+            if (monsterTimer1 > monsterTimestamp)
+            {
+              
+                if (Random.Range(0, 10) == 1)
+                {
 
-        //once you're a certain distance away we should probably implement a light switch.
-        //you need to get away then cut power. 
-        //once cut power, it'll scan manually
-        //if power is on you die
-        //avoid the scan - it scans once or twice
-        //and then it leaves for a while
+                    phase = MonsterPhase.Unaware;
+                    monsterTimer1 = 0;
+                }
+                else
+                {
+                    roarAudioSourceNear.PlayOneShot(roarAudioSourceNear.clip);
+                    phase = MonsterPhase.Approaching;
+                    monsterTimer1 = 0;
+                    monsterTimestamp = Random.Range(15, 25);
+                }
 
-        //let me know if there's anything else you want to add/change for this.
-        //i really don't know how this ping system is gonna work so i don't know what else to do here
-        //i'll set up needed methods ig?
+
+            }
 
 
+        }
+
+        if(phase == MonsterPhase.Approaching)
+        {
+            monsterTimer1 += Time.deltaTime;
+            if(monsterTimer1 > monsterTimestamp)
+            {
+                if (Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position) < 200)
+                {
+                    GameManager.instance.KillDaPlayer("MonsterSlow");
+                    Debug.Log("Dead!!!");
+                }
+
+                else if (GameManager.instance.ShipCore.GetVelocity().magnitude > 5)
+                {
+                    monsterTimer1 = 0;
+                    monsterTimestamp = Random.Range(5, 20);
+                    phase = MonsterPhase.Kill;
+                }
+
+                else
+                {
+                    monsterTimer1 = 0;
+                    phase = MonsterPhase.StartScan;
+                }
+                
+            }
+
+            
+
+            if (staticSource.volume < 1) staticSource.volume += .01f*Time.deltaTime;
+        }
+
+
+
+        if(phase == MonsterPhase.Kill)
+        {
+            monsterTimer1 += Time.deltaTime;
+            if (monsterTimer1 > monsterTimestamp)
+            {
+                GameManager.instance.KillDaPlayer("Jumpscare");
+
+            }
+        }
 
         if (phase == MonsterPhase.StartScan)
         {
-            transform.position = waypoints[0].transform.position;
+            transform.LookAt(GameManager.instance.Player.transform.position);
+            transform.position = waypoint1.transform.position;
             phase = MonsterPhase.Scanning;
         }
-       if(phase==MonsterPhase.Scanning)
+
+        if(phase== MonsterPhase.Scanning)
         {
-            transform.LookAt(new Vector3(0,3,2));
-            if (!transform.position.Equals(waypoints[currentWaypoint].position))
+            transform.LookAt(GameManager.instance.Player.transform.position);
+            transform.position=Vector3.MoveTowards(transform.position,waypoint2.transform.position,20f*Time.deltaTime);
+            if (transform.position.Equals(waypoint2.transform.position))
             {
-                transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, 4*Time.deltaTime);
-            }
-            else
-            {
-                if (currentWaypoint != waypoints.Length-1)
+                if (Random.Range(0, 4) == 2)
                 {
-                    currentWaypoint++;
+                    phase = MonsterPhase.ScanAgain;
                 }
                 else
                 {
                     phase = MonsterPhase.Unaware;
                 }
             }
+
         }
+
+        if (phase == MonsterPhase.ScanAgain)
+        {
+            transform.LookAt(GameManager.instance.Player.transform.position);
+            transform.position = Vector3.MoveTowards(transform.position, waypoint1.transform.position, 15f * Time.deltaTime);
+            if (transform.position.Equals(waypoint1.transform.position))
+            {
+                phase = MonsterPhase.Unaware;
+                //maybe play annoyed sound
+            }
+
+        }
+
+        if(phase==MonsterPhase.Scanning || phase == MonsterPhase.ScanAgain)
+        {
+            //Debug.Log("Scanning, blud is here: "+ killZone.ISBROHERE);
+            if (killZone.ISBROHERE && !bludIsDead)
+            {
+               // Debug.Log("Dumbass Down");
+                bludIsDead = true;
+                monsterTimer2 = 0;
+                monsterTimestamp = Random.Range(1, 3);
+
+            }
+
+
+        }
+
+        if (bludIsDead)
+        {
+            monsterTimer2 += Time.deltaTime;
+            if (monsterTimer2 > monsterTimestamp)
+            {
+                GameManager.instance.KillDaPlayer("Jumpscare");
+                Debug.Log("Fuckhead");
+            }
+        }
+
+        if (phase == MonsterPhase.Unaware)
+        {
+            monsterTimer1 = 0;
+            if(staticSource.volume>0)staticSource.volume -= .01f * Time.deltaTime;
+            transform.position = origin.transform.position;
+        }
+
+
+
     }
 
     public void SetEvilPhase(MonsterPhase state)
@@ -109,13 +229,15 @@ public class Monster : MonoBehaviour
         phase = state;
     }
 
-    public void Pinged()
+    public void Pinged(Vector3 pos)
     {
         if (Random.Range(0, 10) != 1)
         {
-            phase = MonsterPhase.Aware;
-            monsterTimestamp = Random.Range(10, 20);
-
+            phase = MonsterPhase.Pinged;
+            monsterTimestamp = Random.Range(2, 5);
+            monsterTimer1 = 0;
+            //roarAudioSourceFar.PlayOneShot(roarAudioSourceFar.clip);
+            locatedPos = pos;
         }
     }
 
