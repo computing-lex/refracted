@@ -56,10 +56,10 @@ public class ShipController : MonoBehaviour, IInteractable
         return standingPos.position;
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         Debug.Log("trigger guh");
-    }
+    }*/
 
    
 }

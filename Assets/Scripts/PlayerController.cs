@@ -42,13 +42,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         if (playerState == PlayerState.Walking)
         {
 
             //Debug.Log(Move.ReadValue<Vector2>());
             Vector3 _transformedPlayerInput = transform.TransformDirection(new Vector3(Move.ReadValue<Vector2>().x, 0, Move.ReadValue<Vector2>().y));
 
-            Vector3 vel = new Vector3(_transformedPlayerInput.x, -1f, _transformedPlayerInput.z);
+            Vector3 vel = new Vector3(_transformedPlayerInput.x, 0, _transformedPlayerInput.z);
 
             characterController.Move(movementSpeed * vel * Time.deltaTime);
         }
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
             //transform.LookAt(GameManager.instance.SteeringWheel.transform.position);
             //do the controller shit
         }
+       
     }
 
     private void LateUpdate()
@@ -100,11 +103,16 @@ public class PlayerController : MonoBehaviour
 
     public void MoveWithShip(Vector3 move, Vector3 rotate)
     {
-        characterController.Move(new Vector3(move.x, 0, move.z) );
+        characterController.enabled = false;
+        transform.position+=(new Vector3(move.x, 0, move.z) );
+        transform.position = new Vector3(transform.position.x, 0.083f,transform.position.z);
         //cam.transform.localRotation = Quaternion.Euler(rotate.x, 0, 0);
         //if(playerState == PlayerState.Piloting)
         //{
         transform.Rotate(rotate);
+
+        
+        characterController.enabled = true;
         //}
 
     }
