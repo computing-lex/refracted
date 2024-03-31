@@ -12,14 +12,15 @@ public class SpaceFieldGeneration : MonoBehaviour
     public bool regenMap = false;
     [SerializeField] private int planetSpacing = 10;
 
-    [SerializeField] private int height;
-    [SerializeField] private int width;
+    // Map generation parameters 
+    [SerializeField] private int height, width;
+    [SerializeField] private int scaleX, scaleY;
     [SerializeField] private int[,] map;
 
     [SerializeField] public Material PlanetMaterial;
     [SerializeField] public ShapeSettings shapeSettings;
     private List<GameObject> planets = new List<GameObject>();
-    
+
     // Generates new planet array randomly
     void Start()
     {
@@ -70,12 +71,13 @@ public class SpaceFieldGeneration : MonoBehaviour
                 {
                     if (map[x, y] == 1)
                     {
+                        Vector2 scaledMapPos = new(x * scaleX, y * scaleY);
                         Vector3 randomShift = maxShift * Random.value;
-                        Vector3 position = new Vector3(-width / 2 + x + randomShift.x, randomShift.y, -height / 2 + y + randomShift.z);
-                        
+                        Vector3 position = new(width / 2 + scaledMapPos.x + .5f, 0, height / 2 + scaledMapPos.y + .5f);
+
                         GameObject newPlanetoid = Instantiate(planetoid, position, Quaternion.identity);
 
-                        newPlanetoid.transform.SetParent(planetParent.transform, false);
+                        //newPlanetoid.transform.SetParent(planetParent.transform, true);
                         newPlanetoid.name = "Planetoid " + x + ", " + y;
                         planets.Add(newPlanetoid);
 
@@ -92,9 +94,9 @@ public class SpaceFieldGeneration : MonoBehaviour
         planetComponent.PlanetMaterial = PlanetMaterial;
         planetComponent.shapeSettings = shapeSettings;
         planetComponent.GeneratePlanet();
-        newPlanetoid.transform.localPosition = new Vector3(0,0,0);
         RandomizeMaterial(newPlanetoid);
     }
+
     private void RandomizeMaterial(GameObject newPlanetoid)
     {
         MeshRenderer[] renderer = newPlanetoid.GetComponentsInChildren<MeshRenderer>();
@@ -110,7 +112,8 @@ public class SpaceFieldGeneration : MonoBehaviour
             pm.SetTexture("_MainTex", rbase);
         }
     }
-    private void DestroyPlanets() {
+    private void DestroyPlanets()
+    {
         for (int i = 0; i < planets.Count; i++)
         {
             Destroy(planets[i]);

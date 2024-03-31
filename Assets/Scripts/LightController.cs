@@ -35,7 +35,7 @@ public class LightController : MonoBehaviour
 
             flickerCounter += Time.deltaTime;
 
-            Debug.Log(flickerCounter + ", delay=" + flickerDelay + ", flicker high and low: " + flickerHigh + ", " + flickerLow);
+            //Debug.Log(flickerCounter + ", delay=" + flickerDelay + ", flicker high and low: " + flickerHigh + ", " + flickerLow);
             if (flickerCounter > flickerDelay)
             {
                 if (!hasPlayed)

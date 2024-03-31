@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0010225609, g: 0.0007087669, b: 0.0037019057, a: 1}
+  m_IndirectSpecularColor: {r: 0.00096905476, g: 0.0006811152, b: 0.0035482133, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -355,14 +355,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8013511549872953701, guid: da51f699d773e354b96eb0487542dbca, type: 3}
-      propertyPath: shapeSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: bb563e90654574d4cb7d931456630f79, type: 2}
-    - target: {fileID: 8013511549872953701, guid: da51f699d773e354b96eb0487542dbca, type: 3}
-      propertyPath: PlanetMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: e5a8f2e0a07c59340b78722d0e37eb25, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

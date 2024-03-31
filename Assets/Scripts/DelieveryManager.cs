@@ -25,12 +25,20 @@ public class DelieveryManager : MonoBehaviour
     {
         public int[,] destination;
         public string contents;
+        public PackageType type;
 
         public Package()
         {
             contents = "No content defined.";
         }
     }
+    
+    public enum PackageType
+    {
+        Flat,
+        Medium,
+        Large
+    };
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +62,6 @@ public class DelieveryManager : MonoBehaviour
 
     public void GeneratePackage()
     {
-        
+
     }
 }
