@@ -136,7 +136,7 @@ public class Monster : MonoBehaviour
             if(monsterTimer1 > monsterTimestamp)
             {
                 
-                if (Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position) < 50)
+                if (Vector3.Distance(locatedPos, GameManager.instance.ShipCore.transform.position) < 5)
                 {
                     GameManager.instance.KillDaPlayer("MonsterSlow");
                     Debug.Log("Dead!!!");
@@ -233,7 +233,7 @@ public class Monster : MonoBehaviour
             }
         }
 
-        //Debug.Log(killZone.ISBROHERE);
+        Debug.Log(killZone.ISBROHERE);
 
         if(phase == MonsterPhase.FadeOut)
         {
@@ -309,13 +309,16 @@ public class Monster : MonoBehaviour
     }
     public void Pinged(Vector3 pos)
     {
-        if (Random.Range(0, 10) != 1)
+        if (phase == MonsterPhase.Unaware)
         {
-            phase = MonsterPhase.Pinged;
-            monsterTimestamp = Random.Range(2, 5);
-            monsterTimer1 = 0;
-            //roarAudioSourceFar.PlayOneShot(roarAudioSourceFar.clip);
-            locatedPos = pos;
+            if (Random.Range(0, 4) == 1)
+            {
+                phase = MonsterPhase.Pinged;
+                monsterTimestamp = Random.Range(2, 5);
+                monsterTimer1 = 0;
+                //roarAudioSourceFar.PlayOneShot(roarAudioSourceFar.clip);
+                locatedPos = pos;
+            }
         }
     }
 

@@ -14,6 +14,8 @@ public class PingButton : MonoBehaviour, IInteractable
     {
         Debug.Log("Ping!");
         GameManager.instance.Ping();
+        GameManager.instance.monster.Pinged(transform.position);
+        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
         pinged = true;
     }
 
